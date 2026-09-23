@@ -90,14 +90,26 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Media Hero Showcase — real boutique banner */}
+            {/* Right Media Hero Showcase */}
             <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-[#e8a0b4]/60">
+              {/* Main: Embroidery Hoop — restored */}
+              <div className="relative mx-auto max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-[#d4af37]/60 p-2 bg-[#2a050f]">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden bg-stone-950">
+                  <Image
+                    src="/images/hero-embroidery.svg"
+                    alt="Madhus Boutique Master Embroidery Hoop — Est. 2026"
+                    fill
+                    priority
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+              {/* Floating boutique banner card */}
+              <div className="absolute -bottom-5 -right-3 w-40 h-24 rounded-xl overflow-hidden shadow-xl border-2 border-white hidden lg:block">
                 <Image
                   src="/boutique-banner.jpg"
-                  alt="Madhus Boutique — Perfection in every stitch and fit"
+                  alt="Madhus Boutique"
                   fill
-                  priority
                   className="object-cover object-center"
                 />
               </div>
