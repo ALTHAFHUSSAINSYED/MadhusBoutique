@@ -21,8 +21,7 @@ export default function HomePage() {
     <div className="space-y-20 pb-20">
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#fbf8f2] via-[#f7f2e7] to-[#fdfbf7] border-b border-[#e7dfd5] py-16 sm:py-24">
-        {/* Subtle decorative gold thread ring */}
-        <div className="absolute top-1/2 right-10 -translate-y-1/2 w-96 h-96 rounded-full border-2 border-dashed border-[#d4af37]/30 pointer-events-none hidden xl:block" />
+
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -104,23 +103,7 @@ export default function HomePage() {
                   />
                 </div>
               </div>
-              {/* Floating boutique banner card */}
-              <div className="absolute -bottom-5 -right-3 w-40 h-24 rounded-xl overflow-hidden shadow-xl border-2 border-white hidden lg:block">
-                <Image
-                  src="/boutique-banner.jpg"
-                  alt="Madhus Boutique"
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
-              {/* Floating badge */}
-              <div className="absolute -bottom-4 -left-4 bg-white border border-[#e7dfd5] rounded-2xl px-4 py-2.5 shadow-lg hidden lg:flex items-center gap-2">
-                <span className="text-lg">✨</span>
-                <div>
-                  <p className="text-[11px] font-bold text-[#4a1220]">Madhu&apos;s Boutique</p>
-                  <p className="text-[10px] text-stone-500">Perfection in every stitch</p>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
