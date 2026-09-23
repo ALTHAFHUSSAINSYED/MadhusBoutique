@@ -4,9 +4,10 @@
 # =================================================================
 
 # ---------------------------------------------------------------
-# SECRET & ENVIRONMENT FILES — NEVER COMMIT
+# SECRET & ENVIRONMENT FILES — NEVER COMMIT REAL SECRETS
 # ---------------------------------------------------------------
-.env
+# .env is the TEMPLATE file (placeholder values only) — tracked in git
+# Real secrets go in Vercel Project Settings, NOT in any local file
 .env.local
 .env.development
 .env.development.local
@@ -16,8 +17,8 @@
 .env.production.local
 .env.staging
 .env.staging.local
-# Allow ONLY the example/template file:
-!.env.example
+# Allow ONLY the template file with placeholder values:
+!.env
 
 # ---------------------------------------------------------------
 # AWS Credentials
