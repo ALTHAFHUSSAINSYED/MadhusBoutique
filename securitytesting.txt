@@ -1,0 +1,97 @@
+
+
+Do NOT assume the application is production-ready because the automated tests pass.
+
+Perform a complete production-readiness audit of the current Madhus Boutique codebase.
+
+Do not rewrite the application unnecessarily.
+
+Audit the existing implementation against the following areas:
+
+1. Authentication
+2. MFA
+3. RBAC
+4. Authorization
+5. IDOR
+6. Payment tampering
+7. Price manipulation
+8. Order manipulation
+9. S3 access control
+10. Presigned URL security
+11. ZIP delivery security
+12. File upload security
+13. Path traversal
+14. XSS
+15. CSRF
+16. SQL injection
+17. API authorization
+18. Rate limiting
+19. Brute-force protection
+20. Session management
+21. Secret exposure
+22. AWS credential exposure
+23. Supabase service-role key exposure
+24. Admin privilege escalation
+25. Audit-log integrity
+26. Error-message information leakage
+27. Customer-data exposure
+28. Payment QR modification protection
+29. Concurrent payment verification
+30. Duplicate order/payment handling
+31. Replay attacks
+32. Race conditions
+33. Webhook/API abuse if applicable
+34. Serverless execution/time/resource limits
+35. S3 storage/bandwidth failure scenarios
+36. Database backup/recovery
+37. Production logging and monitoring
+38. Environment-variable separation
+39. CORS/security headers
+40. Dependency vulnerabilities
+
+For every finding provide:
+
+* Severity: Critical / High / Medium / Low
+* Exact file/path
+* Exact vulnerability or weakness
+* Why it matters
+* Attack scenario
+* Recommended fix
+* Whether the issue currently exists or is only a theoretical concern
+
+Also inspect all uses of:
+
+* SUPABASE_SERVICE_ROLE_KEY
+* AWS_ACCESS_KEY_ID
+* AWS_SECRET_ACCESS_KEY
+* presigned URLs
+* admin session cookies
+* payment verification functions
+
+Verify that secrets can never reach client-side bundles.
+
+Verify every admin API independently performs server-side authentication AND authorization.
+
+Verify that frontend route protection is NOT being treated as the security boundary.
+
+Verify that customer order access is IDOR-safe.
+
+Verify that customer downloads are based only on verified purchases.
+
+Verify that the server calculates product prices and order totals independently of client input.
+
+Verify that payment verification cannot be performed by a customer.
+
+After the audit, run all tests, TypeScript checks and linting.
+
+Do not claim "production ready" unless all Critical and High findings are resolved.
+
+Produce a final production-readiness report with:
+
+PASS
+FAIL
+BLOCKED
+
+for each major category.
+
+Do not expose or request actual production secrets during this audit.

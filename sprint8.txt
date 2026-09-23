@@ -1,0 +1,43 @@
+Perform a security review of the entire Madhus Boutique application.
+
+Attempt to identify and fix:
+
+1. IDOR
+2. broken access control
+3. privilege escalation
+4. payment manipulation
+5. price manipulation
+6. order manipulation
+7. unauthorized S3 access
+8. signed URL abuse
+9. expired URL reuse
+10. arbitrary file upload
+11. malicious file upload
+12. path traversal
+13. XSS
+14. CSRF
+15. SQL injection
+16. authentication bypass
+17. MFA bypass
+18. session fixation
+19. brute force
+20. rate-limit bypass
+21. information leakage
+22. secret exposure
+23. service-role key exposure
+24. AWS credential exposure
+25. admin endpoint exposure
+
+Perform both code review and automated tests.
+
+Do not merely report vulnerabilities.
+
+Fix them.
+
+After fixing:
+- run tests
+- run lint
+- run TypeScript
+- produce security report
+- list remaining risks
+- classify risks as Critical/High/Medium/Low

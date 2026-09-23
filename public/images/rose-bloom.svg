@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="floralSilk" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#2c1a1d"/>
+      <stop offset="60%" stop-color="#190e11"/>
+      <stop offset="100%" stop-color="#0a0507"/>
+    </radialGradient>
+    <linearGradient id="rosePink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fda4af"/>
+      <stop offset="50%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#9f1239"/>
+    </linearGradient>
+    <linearGradient id="leafGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#86efac"/>
+      <stop offset="50%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#floralSilk)"/>
+  <rect x="25" y="25" width="550" height="550" rx="16" fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Rose Petals Group -->
+  <g transform="translate(300, 290)">
+    <!-- Leaves -->
+    <path d="M 0,0 C -120,40 -160,-60 -80,-80 C -20,-90 -10,-20 0,0 Z" fill="url(#leafGreen)" opacity="0.9"/>
+    <path d="M 0,0 C 120,40 160,-60 80,-80 C 20,-90 10,-20 0,0 Z" fill="url(#leafGreen)" opacity="0.9"/>
+    <path d="M 0,0 C -80,140 -150,80 -90,40 C -40,10 -10,0 0,0 Z" fill="url(#leafGreen)" opacity="0.8"/>
+    <path d="M 0,0 C 80,140 150,80 90,40 C 40,10 10,0 0,0 Z" fill="url(#leafGreen)" opacity="0.8"/>
+
+    <!-- Leaf Stitches -->
+    <path d="M -80,-80 L 0,0 M 80,-80 L 0,0" stroke="#fde047" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+    <!-- Rose Outer Petals -->
+    <circle cx="0" cy="0" r="95" fill="url(#rosePink)" opacity="0.95"/>
+    <path d="M -70,-40 C -90,40 0,110 70,50 C 110,-10 30,-90 -70,-40 Z" fill="#e11d48"/>
+    
+    <!-- Mid Petals -->
+    <path d="M -45,-30 C -60,25 0,70 50,30 C 80,-10 20,-60 -45,-30 Z" fill="#be123c"/>
+    <circle cx="0" cy="0" r="40" fill="#9f1239"/>
+    <path d="M -20,-15 C -30,15 0,35 25,15 C 40,-5 10,-30 -20,-15 Z" fill="#881337"/>
+    <circle cx="0" cy="0" r="16" fill="#ffe4e6"/>
+
+    <!-- Zari Highlights -->
+    <circle cx="0" cy="0" r="100" fill="none" stroke="url(#gold)" stroke-width="2" stroke-dasharray="4,3"/>
+  </g>
+
+  <!-- Technical Spec Badge -->
+  <g transform="translate(40, 520)">
+    <rect width="210" height="42" rx="8" fill="#000000" opacity="0.6"/>
+    <text x="15" y="26" font-family="sans-serif" font-size="13" font-weight="bold" fill="#fef3c7">STITCHES: 18,420 | DST/PES</text>
+  </g>
+
+  <!-- Watermark Diagonal -->
+  <g opacity="0.22" transform="rotate(-30 300 300)">
+    <text x="-50" y="300" font-family="serif" font-size="38" font-weight="900" fill="#ffffff" letter-spacing="12">MADHUS BOUTIQUE PREVIEW</text>
+    <line x1="-100" y1="315" x2="700" y2="315" stroke="#ffffff" stroke-width="2" stroke-dasharray="10,5"/>
+  </g>
+</svg>

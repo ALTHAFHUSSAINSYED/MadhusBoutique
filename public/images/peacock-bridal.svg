@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="silkBg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#4a0e1c"/>
+      <stop offset="60%" stop-color="#2d050f"/>
+      <stop offset="100%" stop-color="#190208"/>
+    </radialGradient>
+    <linearGradient id="goldThread" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe680"/>
+      <stop offset="45%" stop-color="#d4af37"/>
+      <stop offset="70%" stop-color="#aa820a"/>
+      <stop offset="100%" stop-color="#ffd700"/>
+    </linearGradient>
+    <linearGradient id="emeraldThread" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="50%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
+    <linearGradient id="zariBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <!-- Stitch effect pattern -->
+    <pattern id="stitchMesh" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 0,4 Q 4,2 8,4" stroke="#d4af37" stroke-width="0.75" fill="none" opacity="0.35"/>
+    </pattern>
+  </defs>
+
+  <!-- Fabric Texture -->
+  <rect width="600" height="600" fill="url(#silkBg)"/>
+  
+  <!-- Outer Decorative Border (Stitched) -->
+  <rect x="25" y="25" width="550" height="550" rx="16" fill="none" stroke="url(#goldThread)" stroke-width="2" stroke-dasharray="6,4"/>
+  <rect x="35" y="35" width="530" height="530" rx="12" fill="none" stroke="url(#goldThread)" stroke-width="1" opacity="0.5"/>
+
+  <!-- Peacock Body & Head (Aari Stitch styling) -->
+  <g transform="translate(150, 100)">
+    <!-- Tail Plumes -->
+    <path d="M 150,320 C 50,260 20,150 70,80 C 110,30 200,50 220,120 C 230,170 190,270 150,320 Z" fill="url(#emeraldThread)" opacity="0.9"/>
+    <path d="M 150,320 C 50,260 20,150 70,80 C 110,30 200,50 220,120 C 230,170 190,270 150,320 Z" stroke="url(#goldThread)" stroke-width="3" stroke-dasharray="5,3" fill="url(#stitchMesh)"/>
+    
+    <!-- Feather Eyes -->
+    <circle cx="95" cy="110" r="24" fill="url(#zariBlue)"/>
+    <circle cx="95" cy="110" r="14" fill="url(#goldThread)"/>
+    <circle cx="95" cy="110" r="7" fill="#064e3b"/>
+
+    <circle cx="150" cy="80" r="28" fill="url(#zariBlue)"/>
+    <circle cx="150" cy="80" r="16" fill="url(#goldThread)"/>
+    <circle cx="150" cy="80" r="8" fill="#064e3b"/>
+
+    <circle cx="190" cy="140" r="22" fill="url(#zariBlue)"/>
+    <circle cx="190" cy="140" r="12" fill="url(#goldThread)"/>
+    <circle cx="190" cy="140" r="6" fill="#064e3b"/>
+
+    <!-- Peacock Neck & Crest -->
+    <path d="M 150,320 C 180,290 220,240 220,190 C 220,140 180,130 180,110 C 180,90 200,80 200,80 C 170,90 160,110 160,140 C 160,190 120,280 150,320 Z" fill="url(#zariBlue)"/>
+    <path d="M 180,110 Q 210,70 230,50" stroke="url(#goldThread)" stroke-width="2" stroke-dasharray="3,2" fill="none"/>
+    <circle cx="232" cy="48" r="5" fill="url(#goldThread)"/>
+    <path d="M 180,110 Q 195,60 210,40" stroke="url(#goldThread)" stroke-width="2" stroke-dasharray="3,2" fill="none"/>
+    <circle cx="212" cy="38" r="5" fill="url(#goldThread)"/>
+
+    <!-- Gold Zardozi Stitch Accents -->
+    <path d="M 140,240 Q 170,220 180,260 Q 150,290 140,240 Z" fill="url(#goldThread)" opacity="0.85"/>
+  </g>
+
+  <!-- Technical Spec Badge -->
+  <g transform="translate(40, 520)">
+    <rect width="210" height="42" rx="8" fill="#000000" opacity="0.6"/>
+    <text x="15" y="26" font-family="sans-serif" font-size="13" font-weight="bold" fill="#fef3c7">STITCHES: 42,850 | DST/PES</text>
+  </g>
+
+  <!-- Watermark Diagonal -->
+  <g opacity="0.22" transform="rotate(-30 300 300)">
+    <text x="-50" y="300" font-family="serif" font-size="38" font-weight="900" fill="#ffffff" letter-spacing="12">MADHUS BOUTIQUE PREVIEW</text>
+    <line x1="-100" y1="315" x2="700" y2="315" stroke="#ffffff" stroke-width="2" stroke-dasharray="10,5"/>
+  </g>
+</svg>

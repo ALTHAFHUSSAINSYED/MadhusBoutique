@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="kidsBg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <linearGradient id="softGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="teddyBrown" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#kidsBg)"/>
+  <rect x="25" y="25" width="550" height="550" rx="16" fill="none" stroke="url(#softGold)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Crescent Moon -->
+  <path d="M 380,120 C 300,120 230,190 230,280 C 230,370 300,440 380,440 C 330,410 300,350 300,280 C 300,210 330,150 380,120 Z" fill="url(#softGold)" stroke="#fef08a" stroke-width="2" stroke-dasharray="3,2"/>
+
+  <!-- Teddy Bear Head & Body -->
+  <g transform="translate(240, 240)">
+    <!-- Ears -->
+    <circle cx="-35" cy="-35" r="22" fill="url(#teddyBrown)" stroke="#fef08a" stroke-width="1.5"/>
+    <circle cx="-35" cy="-35" r="12" fill="#fef08a" opacity="0.6"/>
+    <circle cx="35" cy="-35" r="22" fill="url(#teddyBrown)" stroke="#fef08a" stroke-width="1.5"/>
+    <circle cx="35" cy="-35" r="12" fill="#fef08a" opacity="0.6"/>
+
+    <!-- Head -->
+    <circle cx="0" cy="0" r="50" fill="url(#teddyBrown)" stroke="#fde047" stroke-width="2" stroke-dasharray="4,2"/>
+
+    <!-- Snout & Eyes -->
+    <ellipse cx="0" cy="12" rx="22" ry="16" fill="#fef3c7"/>
+    <circle cx="0" cy="6" r="7" fill="#451a03"/>
+    <circle cx="-16" cy="-8" r="5" fill="#451a03"/>
+    <circle cx="16" cy="-8" r="5" fill="#451a03"/>
+  </g>
+
+  <!-- Stars -->
+  <g transform="translate(130, 140)">
+    <polygon points="0,-18 5,-5 18,0 5,5 0,18 -5,5 -18,0 -5,-5" fill="url(#softGold)"/>
+  </g>
+  <g transform="translate(420, 200)">
+    <polygon points="0,-14 4,-4 14,0 4,4 0,14 -4,4 -14,0 -4,-4" fill="url(#softGold)"/>
+  </g>
+  <g transform="translate(170, 360)">
+    <polygon points="0,-12 3,-3 12,0 3,3 0,12 -3,3 -12,0 -3,-3" fill="url(#softGold)"/>
+  </g>
+
+  <!-- Technical Spec Badge -->
+  <g transform="translate(40, 520)">
+    <rect width="210" height="42" rx="8" fill="#000000" opacity="0.6"/>
+    <text x="15" y="26" font-family="sans-serif" font-size="13" font-weight="bold" fill="#fef3c7">STITCHES: 12,800 | SOFT EMB</text>
+  </g>
+
+  <!-- Watermark Diagonal -->
+  <g opacity="0.22" transform="rotate(-30 300 300)">
+    <text x="-50" y="300" font-family="serif" font-size="38" font-weight="900" fill="#ffffff" letter-spacing="12">MADHUS BOUTIQUE PREVIEW</text>
+    <line x1="-100" y1="315" x2="700" y2="315" stroke="#ffffff" stroke-width="2" stroke-dasharray="10,5"/>
+  </g>
+</svg>
