@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Sparkles, X } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export function StitchingIntroAnimation() {
   // Always active on browser reload / initial page load
@@ -70,15 +70,6 @@ export function StitchingIntroAnimation() {
       aria-label="Embroidery Stitching Loading Animation"
       role="dialog"
     >
-      {/* Skip Button */}
-      <button
-        onClick={handleClose}
-        className="absolute top-6 right-6 z-20 flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-[#fef3c7] text-xs font-semibold backdrop-blur-md border border-white/20 transition-all cursor-pointer group shadow-lg"
-      >
-        <span>Skip Intro</span>
-        <X className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform" />
-      </button>
-
       {/* Atmospheric Silk Texture & Ambient Studio Lighting */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(107,20,38,0.65)_0%,rgba(23,3,8,0.98)_70%)] pointer-events-none" />
       {/* Fine Linen Cloth Weave Texture */}
