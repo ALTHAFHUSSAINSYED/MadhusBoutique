@@ -5,37 +5,32 @@ import Image from "next/image";
 import { Sparkles, X } from "lucide-react";
 
 export function StitchingIntroAnimation() {
-  const [visible, setVisible] = useState(false);
+  // Always active on browser reload / initial page load
+  const [visible, setVisible] = useState(true);
   const [animatingOut, setAnimatingOut] = useState(false);
   const [stitchPhase, setStitchPhase] = useState(0);
 
   useEffect(() => {
-    // Check if user has already seen the intro animation in this session
-    try {
-      const alreadySeen = sessionStorage.getItem("mb_stitch_intro_seen");
-      if (!alreadySeen) {
-        setVisible(true);
-        // Stage transitions:
-        // 0: Initial piercing starts (0s)
-        // 1: Stitching monogram & flourish (0.6s)
-        // 2: Final lock stitch & gold brand reveal (1.8s)
-        // 3: Fade out to website (2.9s)
-        const t1 = setTimeout(() => setStitchPhase(1), 600);
-        const t2 = setTimeout(() => setStitchPhase(2), 1700);
-        const t3 = setTimeout(() => {
-          handleClose();
-        }, 3000);
+    // When reloading or opening the site, start needle piercing sequence immediately
+    setVisible(true);
+    setAnimatingOut(false);
+    setStitchPhase(0);
 
-        return () => {
-          clearTimeout(t1);
-          clearTimeout(t2);
-          clearTimeout(t3);
-        };
-      }
-    } catch {
-      // Storage unavailable fallback
-      setVisible(false);
-    }
+    // Phase 0 (0ms - 800ms): Needle rapidly plunges & pierces through the cloth, testing tension
+    // Phase 1 (800ms - 2000ms): Needle stitches golden silk thread along the "M" royal monogram & floral flourish
+    // Phase 2 (2000ms - 3200ms): Needle pulls up, final lock stitch sparks, and Madhus Boutique emblem shines
+    // Phase 3 (3200ms+): Smooth curtain fade out into the storefront
+    const t1 = setTimeout(() => setStitchPhase(1), 800);
+    const t2 = setTimeout(() => setStitchPhase(2), 2000);
+    const t3 = setTimeout(() => {
+      handleClose();
+    }, 3300);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, []);
 
   // Listen for custom replay event from footer or anywhere
@@ -44,9 +39,9 @@ export function StitchingIntroAnimation() {
       setVisible(true);
       setAnimatingOut(false);
       setStitchPhase(0);
-      const t1 = setTimeout(() => setStitchPhase(1), 600);
-      const t2 = setTimeout(() => setStitchPhase(2), 1700);
-      const t3 = setTimeout(() => handleClose(), 3000);
+      const t1 = setTimeout(() => setStitchPhase(1), 800);
+      const t2 = setTimeout(() => setStitchPhase(2), 2000);
+      const t3 = setTimeout(() => handleClose(), 3300);
       return () => {
         clearTimeout(t1);
         clearTimeout(t2);
@@ -60,218 +55,212 @@ export function StitchingIntroAnimation() {
 
   const handleClose = () => {
     setAnimatingOut(true);
-    try {
-      sessionStorage.setItem("mb_stitch_intro_seen", "true");
-    } catch {
-      // ignore
-    }
     setTimeout(() => {
       setVisible(false);
-    }, 600);
+    }, 700);
   };
 
   if (!visible) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#1e050c] overflow-hidden transition-all duration-700 select-none ${
+      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-[#170308] overflow-hidden transition-all duration-700 select-none ${
         animatingOut ? "opacity-0 scale-105 pointer-events-none" : "opacity-100 scale-100"
       }`}
-      aria-label="Embroidery Stitching Atelier Loading Animation"
+      aria-label="Embroidery Stitching Loading Animation"
       role="dialog"
     >
       {/* Skip Button */}
       <button
         onClick={handleClose}
-        className="absolute top-6 right-6 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#fef3c7] text-xs font-medium backdrop-blur-md border border-white/15 transition-all cursor-pointer group"
+        className="absolute top-6 right-6 z-20 flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-[#fef3c7] text-xs font-semibold backdrop-blur-md border border-white/20 transition-all cursor-pointer group shadow-lg"
       >
         <span>Skip Intro</span>
         <X className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform" />
       </button>
 
-      {/* Atmospheric Fabric & Ambient Light */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(107,20,38,0.5)_0%,rgba(30,5,12,0.95)_70%)] pointer-events-none" />
-      {/* Fine Linen Cloth Weave Pattern */}
+      {/* Atmospheric Silk Texture & Ambient Studio Lighting */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(107,20,38,0.65)_0%,rgba(23,3,8,0.98)_70%)] pointer-events-none" />
+      {/* Fine Linen Cloth Weave Texture */}
       <div
-        className="absolute inset-0 opacity-15 pointer-events-none"
+        className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(#d4af37 0.75px, transparent 0.75px), radial-gradient(#d4af37 0.75px, #1e050c 0.75px)`,
-          backgroundSize: "16px 16px",
-          backgroundPosition: "0 0, 8px 8px",
+          backgroundImage: `radial-gradient(#d4af37 0.8px, transparent 0.8px), radial-gradient(#d4af37 0.8px, #170308 0.8px)`,
+          backgroundSize: "14px 14px",
+          backgroundPosition: "0 0, 7px 7px",
         }}
       />
 
-      {/* Embroidery Hoop Container */}
-      <div className="relative flex flex-col items-center justify-center p-6 text-center max-w-lg mx-auto">
-        {/* Wooden Embroidery Hoop Frame */}
-        <div className="relative w-72 h-72 sm:w-84 sm:h-84 rounded-full border-[10px] border-[#935c33] shadow-[0_0_60px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,0,0,0.6)] flex items-center justify-center bg-[#290812] overflow-hidden">
-          {/* Hoop Brass Tightener Clamp at top */}
-          <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 w-10 h-3 bg-gradient-to-r from-[#d4af37] via-[#fff4cc] to-[#b8860b] rounded-sm shadow-md border border-[#855e08] z-10" />
+      {/* Embroidery Hoop Rig */}
+      <div className="relative flex flex-col items-center justify-center p-6 text-center max-w-lg mx-auto z-10">
+        {/* Wooden Embroidery Hoop Frame with Depth Shadow */}
+        <div className="relative w-76 h-76 sm:w-88 sm:h-88 rounded-full border-[12px] border-[#8a4e25] shadow-[0_0_80px_rgba(0,0,0,0.9),inset_0_0_35px_rgba(0,0,0,0.7)] flex items-center justify-center bg-[#24060f] overflow-hidden">
+          {/* Hoop Brass Tightener Screw at top */}
+          <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-gradient-to-r from-[#d4af37] via-[#fff4cc] to-[#b8860b] rounded-sm shadow-md border border-[#855e08] z-20" />
 
-          {/* Inner Fabric Texture with Cross-Stitch Grid */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#3b0c1b_0%,#20050e_100%)] opacity-90" />
+          {/* Stretched Taut Fabric Texture */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#3b0c1b_0%,#1c040b_100%)] opacity-95" />
 
-          {/* SVG Canvas for Stitch Path and Needle */}
+          {/* Needle Piercing SVG Stage */}
           <svg
             viewBox="0 0 300 300"
             className="w-full h-full relative z-10 overflow-visible"
           >
             <defs>
-              {/* Gold Thread Metallic Gradient */}
+              {/* Gold Silk Thread Metallic Gradient */}
               <linearGradient id="goldThreadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fff3bf" />
-                <stop offset="50%" stopColor="#d4af37" />
-                <stop offset="100%" stopColor="#aa7c11" />
+                <stop offset="0%" stopColor="#fff7cc" />
+                <stop offset="35%" stopColor="#fde047" />
+                <stop offset="70%" stopColor="#d4af37" />
+                <stop offset="100%" stopColor="#996515" />
               </linearGradient>
 
-              {/* Steel Needle Chrome Gradient */}
+              {/* Steel Needle Chrome Finish */}
               <linearGradient id="needleChrome" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#e2e8f0" />
-                <stop offset="40%" stopColor="#ffffff" />
-                <stop offset="70%" stopColor="#94a3b8" />
-                <stop offset="100%" stopColor="#475569" />
+                <stop offset="0%" stopColor="#cbd5e1" />
+                <stop offset="30%" stopColor="#ffffff" />
+                <stop offset="65%" stopColor="#94a3b8" />
+                <stop offset="100%" stopColor="#334155" />
               </linearGradient>
 
-              {/* Gold Needle Tip Gradient */}
+              {/* Gold Needle Taper Tip */}
               <linearGradient id="goldTip" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#d4af37" />
-                <stop offset="100%" stopColor="#fff08a" />
+                <stop offset="100%" stopColor="#fef08a" />
               </linearGradient>
 
-              {/* Needle Pierce Fabric Shadow */}
-              <radialGradient id="pierceShadow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#000000" stopOpacity="0.8" />
-                <stop offset="60%" stopColor="#24050e" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#24050e" stopOpacity="0" />
+              {/* Cloth Piercing Indentation */}
+              <radialGradient id="pierceHole" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#080103" stopOpacity="0.9" />
+                <stop offset="60%" stopColor="#3b0c1b" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#3b0c1b" stopOpacity="0" />
               </radialGradient>
             </defs>
 
-            {/* Simulated Fabric Pierce Indentation Shadow */}
+            {/* Cloth Puncture Pores & Shadow */}
             <ellipse
               cx="150"
               cy="150"
-              rx="90"
-              ry="90"
-              fill="url(#pierceShadow)"
-              className="animate-pulse"
+              rx="95"
+              ry="95"
+              fill="url(#pierceHole)"
             />
 
-            {/* Dotted Embroidery Guide Trace Outline */}
+            {/* Faint Stencil Trace Marks */}
             <path
-              d="M 85,190 L 115,110 L 150,175 L 185,110 L 215,190 M 110,190 Q 150,225 190,190"
+              d="M 80,195 L 115,105 L 150,175 L 185,105 L 220,195 M 105,195 Q 150,230 195,195"
               fill="none"
               stroke="#541724"
               strokeWidth="2"
               strokeDasharray="4,4"
             />
 
-            {/* Realtime Embroidered Machine Stitches (Appears as Needle Pierces) */}
+            {/* Realtime Embroidered Machine Stitches (Appears as needle pierces) */}
             <path
-              d="M 85,190 L 115,110 L 150,175 L 185,110 L 215,190 M 110,190 Q 150,225 190,190"
+              d="M 80,195 L 115,105 L 150,175 L 185,105 L 220,195 M 105,195 Q 150,230 195,195"
               fill="none"
               stroke="url(#goldThreadGrad)"
-              strokeWidth="3.5"
+              strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeDasharray="6 3"
+              strokeDasharray="7 3.5"
               className={`transition-all duration-1000 ${
-                stitchPhase >= 1 ? "stroke-path-draw" : "opacity-0"
+                stitchPhase >= 1 ? "opacity-100" : "opacity-0"
               }`}
               style={{
-                strokeDashoffset: stitchPhase >= 1 ? 0 : 500,
-                transition: "stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease",
+                strokeDashoffset: stitchPhase >= 1 ? 0 : 550,
+                transition: "stroke-dashoffset 1.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease",
               }}
             />
 
-            {/* Floral Petal Flourish Stitches */}
+            {/* Additional Flourish Stitches */}
             <path
-              d="M 150,110 C 135,80 165,80 150,110 M 80,185 C 60,195 70,220 95,200 M 220,185 C 240,195 230,220 205,200"
+              d="M 150,105 C 130,70 170,70 150,105 M 75,190 C 50,200 65,230 95,205 M 225,190 C 250,200 235,230 205,205"
               fill="none"
               stroke="url(#goldThreadGrad)"
-              strokeWidth="2.5"
+              strokeWidth="3"
               strokeLinecap="round"
-              strokeDasharray="4 2"
+              strokeDasharray="5 2.5"
               className={`transition-all duration-700 ${
                 stitchPhase >= 2 ? "opacity-100" : "opacity-0"
               }`}
             />
 
-            {/* Dynamic Embroidery Needle Piercing & Stitching Rig */}
+            {/* Piercing & Stitching Needle Rig */}
             <g
               className={`transition-all duration-300 transform-gpu ${
                 stitchPhase === 0
-                  ? "wa-needle-pierce-fast"
+                  ? "stitch-needle-pierce-rapid"
                   : stitchPhase === 1
-                  ? "wa-needle-stitching-path"
-                  : "wa-needle-pull-up"
+                  ? "stitch-needle-travel-monogram"
+                  : "stitch-needle-triumph-pull"
               }`}
             >
-              {/* Silk Tension Thread trailing from needle eye */}
+              {/* Trailing Golden Silk Tension Thread from top spool through needle eye */}
               <path
-                d="M 160,-20 Q 175,40 156,70"
+                d="M 150,-30 Q 170,30 151,75"
                 fill="none"
                 stroke="url(#goldThreadGrad)"
                 strokeWidth="2.5"
-                className="opacity-90"
+                className="opacity-95"
               />
 
-              {/* The Needle Body */}
-              {/* Needle Blade */}
+              {/* Needle Blade & Chrome Highlights */}
               <polygon
-                points="155,70 157,70 156.5,145 155.5,145"
+                points="150,75 152,75 151.5,152 150.5,152"
                 fill="url(#needleChrome)"
                 stroke="#64748b"
                 strokeWidth="0.5"
-                filter="drop-shadow(3px 4px 6px rgba(0,0,0,0.7))"
+                filter="drop-shadow(3px 4px 5px rgba(0,0,0,0.8))"
               />
-              {/* Needle Eyelet */}
+              {/* Needle Eyelet (Thread hole) */}
               <ellipse
-                cx="156"
-                cy="76"
+                cx="151"
+                cy="82"
                 rx="1.5"
-                ry="4"
-                fill="#1e050c"
+                ry="4.5"
+                fill="#170308"
                 stroke="url(#goldTip)"
                 strokeWidth="0.8"
               />
-              {/* Thread knot inside Eyelet */}
-              <circle cx="156" cy="76" r="1.2" fill="#fff3bf" />
-              {/* Needle Sharp Piercing Tip (Gold Taper) */}
+              {/* Golden Thread Passing Through Eyelet */}
+              <circle cx="151" cy="82" r="1.3" fill="#fff7cc" />
+              {/* Razor-sharp Tapered Piercing Tip */}
               <polygon
-                points="155.5,145 156.5,145 156,155"
+                points="150.5,152 151.5,152 151,162"
                 fill="url(#goldTip)"
               />
-              {/* Metallic Gleam Highlight */}
+              {/* Metallic Polished Specular Gleam */}
               <line
-                x1="156"
-                y1="85"
-                x2="156"
-                y2="135"
+                x1="151"
+                y1="90"
+                x2="151"
+                y2="145"
                 stroke="#ffffff"
-                strokeWidth="0.75"
-                strokeOpacity="0.8"
+                strokeWidth="0.8"
+                strokeOpacity="0.9"
               />
             </g>
 
-            {/* Needle Piercing Sparkles */}
+            {/* Needle Piercing Spark Punctures */}
             {stitchPhase >= 1 && (
               <g className="animate-ping origin-center">
-                <circle cx="150" cy="175" r="3" fill="#fef08a" />
-                <circle cx="115" cy="110" r="2.5" fill="#fef08a" />
-                <circle cx="185" cy="110" r="2.5" fill="#fef08a" />
+                <circle cx="150" cy="175" r="3.5" fill="#fef08a" />
+                <circle cx="115" cy="105" r="3" fill="#fef08a" />
+                <circle cx="185" cy="105" r="3" fill="#fef08a" />
               </g>
             )}
           </svg>
 
-          {/* Center Brand Emblem revealing when stitching locks */}
+          {/* Center Brand Emblem shining when stitching completes */}
           <div
             className={`absolute inset-0 flex items-center justify-center transition-all duration-700 pointer-events-none ${
               stitchPhase >= 2
                 ? "opacity-100 scale-100"
-                : "opacity-0 scale-90"
+                : "opacity-0 scale-85"
             }`}
           >
-            <div className="relative w-28 h-28 drop-shadow-[0_0_25px_rgba(212,175,55,0.7)] animate-pulse">
+            <div className="relative w-30 h-30 drop-shadow-[0_0_30px_rgba(212,175,55,0.8)] animate-pulse">
               <Image
                 src="/logo-icon.png"
                 alt="Madhus Atelier Stitch Emblem"
@@ -289,10 +278,10 @@ export function StitchingIntroAnimation() {
             <Sparkles className="w-3.5 h-3.5 animate-spin" />
             <span>
               {stitchPhase === 0
-                ? "Calibrating Needle & Tension..."
+                ? "Needle Piercing Cloth..."
                 : stitchPhase === 1
-                ? "Machine Stitching In Progress..."
-                : "Atelier Perfection Calibrated ✨"}
+                ? "Machine Stitching Monogram..."
+                : "Embroidery Calibrated ✨"}
             </span>
             <Sparkles className="w-3.5 h-3.5 animate-spin" />
           </div>
@@ -304,16 +293,16 @@ export function StitchingIntroAnimation() {
             High-precision digitized machine embroidery & bridal atelier craftsmanship.
           </p>
 
-          {/* Micro Progress Line */}
-          <div className="w-48 h-1 bg-[#4a1220] rounded-full mx-auto mt-4 overflow-hidden border border-[#d4af37]/30">
+          {/* Micro Stitch Progress Bar */}
+          <div className="w-52 h-1.5 bg-[#3b0c1b] rounded-full mx-auto mt-4 overflow-hidden border border-[#d4af37]/40 shadow-inner">
             <div
-              className="h-full bg-gradient-to-r from-[#b8860b] via-[#fef08a] to-[#d4af37] transition-all duration-700 ease-out"
+              className="h-full bg-gradient-to-r from-[#b8860b] via-[#fde047] to-[#d4af37] transition-all duration-700 ease-out"
               style={{
                 width:
                   stitchPhase === 0
-                    ? "25%"
+                    ? "30%"
                     : stitchPhase === 1
-                    ? "70%"
+                    ? "75%"
                     : "100%",
               }}
             />
@@ -321,68 +310,68 @@ export function StitchingIntroAnimation() {
         </div>
       </div>
 
-      {/* Keyframe Styles for Needle Physics */}
+      {/* Physics Keyframe Animations for Needle Piercing & Stitching */}
       <style jsx global>{`
-        /* Needle fast pierce motion into fabric */
-        @keyframes needle-pierce {
+        /* Rapid needle puncture in & out through fabric tension */
+        @keyframes needle-pierce-motion {
           0% {
-            transform: translate(0px, -20px) rotate(-6deg) scale(1);
+            transform: translate(0px, -24px) rotate(-6deg) scale(1);
           }
-          40% {
-            transform: translate(-3px, 16px) rotate(4deg) scale(0.92);
-          }
-          70% {
-            transform: translate(2px, -8px) rotate(-3deg) scale(0.98);
-          }
-          100% {
-            transform: translate(0px, 14px) rotate(2deg) scale(0.93);
-          }
-        }
-
-        /* Needle moving along the embroidery monogram */
-        @keyframes needle-stitching {
-          0% {
-            transform: translate(-45px, 20px) rotate(-8deg);
-          }
-          25% {
-            transform: translate(-20px, -35px) rotate(6deg);
-          }
-          50% {
-            transform: translate(0px, 15px) rotate(-5deg);
+          45% {
+            transform: translate(-3px, 20px) rotate(4deg) scale(0.9);
           }
           75% {
-            transform: translate(25px, -35px) rotate(5deg);
+            transform: translate(2px, -10px) rotate(-3deg) scale(0.98);
           }
           100% {
-            transform: translate(45px, 20px) rotate(-4deg);
+            transform: translate(0px, 18px) rotate(3deg) scale(0.92);
           }
         }
 
-        /* Needle final pull-up triumph */
-        @keyframes needle-pull-up {
+        /* Needle traveling along the monogram path */
+        @keyframes needle-stitching-travel {
           0% {
-            transform: translate(45px, 20px) scale(0.95);
+            transform: translate(-50px, 25px) rotate(-9deg);
           }
-          60% {
-            transform: translate(0px, -50px) scale(1.1) rotate(12deg);
+          25% {
+            transform: translate(-22px, -40px) rotate(7deg);
+          }
+          50% {
+            transform: translate(0px, 20px) rotate(-6deg);
+          }
+          75% {
+            transform: translate(22px, -40px) rotate(6deg);
           }
           100% {
-            transform: translate(0px, -80px) scale(1.15) rotate(15deg);
-            opacity: 0.2;
+            transform: translate(50px, 25px) rotate(-5deg);
           }
         }
 
-        .wa-needle-pierce-fast {
-          animation: needle-pierce 0.6s infinite alternate ease-in-out;
+        /* Final triumphant needle pull-up */
+        @keyframes needle-pull-up-final {
+          0% {
+            transform: translate(50px, 25px) scale(0.92);
+          }
+          50% {
+            transform: translate(0px, -60px) scale(1.1) rotate(14deg);
+          }
+          100% {
+            transform: translate(0px, -95px) scale(1.2) rotate(18deg);
+            opacity: 0.15;
+          }
         }
 
-        .wa-needle-stitching-path {
-          animation: needle-stitching 1.2s infinite ease-in-out,
-            needle-pierce 0.3s infinite alternate ease-in-out;
+        .stitch-needle-pierce-rapid {
+          animation: needle-pierce-motion 0.5s infinite alternate ease-in-out;
         }
 
-        .wa-needle-pull-up {
-          animation: needle-pull-up 0.9s forwards ease-out;
+        .stitch-needle-travel-monogram {
+          animation: needle-stitching-travel 1.1s infinite ease-in-out,
+            needle-pierce-motion 0.28s infinite alternate ease-in-out;
+        }
+
+        .stitch-needle-triumph-pull {
+          animation: needle-pull-up-final 0.8s forwards ease-out;
         }
       `}</style>
     </div>
