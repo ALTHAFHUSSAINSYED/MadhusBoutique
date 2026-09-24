@@ -101,6 +101,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/admin/login" className="hover:text-[#dfb15b] transition-colors flex items-center gap-1.5 text-stone-300">
+                  <Lock className="w-3.5 h-3.5 text-[#dfb15b]" />
+                  <span>Staff / Admin Login</span>
+                </Link>
+              </li>
+              <li>
                 <button
                   type="button"
                   onClick={() => {
@@ -194,6 +200,11 @@ export function Footer() {
             <span>•</span>
             <Link href="/track-order" className="hover:text-white transition-colors">
               Self-Serve Order Lookup
+            </Link>
+            <span>•</span>
+            <Link href="/admin/login" className="hover:text-[#dfb15b] transition-colors flex items-center gap-1">
+              <Lock className="w-3 h-3 text-[#dfb15b]" />
+              <span>Admin Portal</span>
             </Link>
           </div>
         </div>

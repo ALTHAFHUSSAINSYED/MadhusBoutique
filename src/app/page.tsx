@@ -13,6 +13,7 @@ import {
 import { MOCK_PRODUCTS } from "@/data/mockProducts";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { Button } from "@/components/ui/button";
+import { AnimatedHeroHoop } from "@/components/home/AnimatedHeroHoop";
 
 export default function HomePage() {
   const featuredProducts = MOCK_PRODUCTS.filter((p) => p.featured).slice(0, 4);
@@ -94,13 +95,7 @@ export default function HomePage() {
               {/* Main: Embroidery Hoop — restored */}
               <div className="relative mx-auto max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-[#d4af37]/60 p-2 bg-[#2a050f]">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden bg-stone-950">
-                  <Image
-                    src="/images/hero-embroidery.svg"
-                    alt="Madhus Boutique Master Embroidery Hoop — Est. 2026"
-                    fill
-                    priority
-                    className="object-cover"
-                  />
+                  <AnimatedHeroHoop />
                 </div>
               </div>
 
