@@ -11,52 +11,58 @@ export function AnimatedHeroHoop() {
         className="w-full h-full overflow-hidden rounded-2xl"
       >
         <defs>
-          {/* Deep Silk Burgundy Fabric Gradient */}
-          <radialGradient id="heroFabricGrad" cx="50%" cy="50%" r="80%">
+          {/* Deep Royal Silk Fabric Gradient */}
+          <radialGradient id="heroFabricGrad" cx="50%" cy="50%" r="85%">
             <stop offset="0%" stopColor="#4a0d1e" />
-            <stop offset="55%" stopColor="#2a050f" />
-            <stop offset="100%" stopColor="#140106" />
+            <stop offset="60%" stopColor="#24050d" />
+            <stop offset="100%" stopColor="#120105" />
           </radialGradient>
 
-          {/* Luxe Metallic Gold Gradient */}
-          <linearGradient id="luxeGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fff3bf" />
-            <stop offset="35%" stopColor="#fde047" />
-            <stop offset="70%" stopColor="#d4af37" />
-            <stop offset="100%" stopColor="#996515" />
+          {/* Genuine Metallic Gold Embroidery Thread Gradient */}
+          <linearGradient id="goldThreadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fff9d6" />
+            <stop offset="30%" stopColor="#fde047" />
+            <stop offset="65%" stopColor="#d4af37" />
+            <stop offset="100%" stopColor="#85580a" />
           </linearGradient>
 
-          {/* Steel Needle Chrome Finish */}
-          <linearGradient id="needleSteel" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#cbd5e1" />
-            <stop offset="30%" stopColor="#ffffff" />
+          {/* Chrome Steel Needle Gradient */}
+          <linearGradient id="needleChromeFinish" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#e2e8f0" />
+            <stop offset="35%" stopColor="#ffffff" />
             <stop offset="70%" stopColor="#94a3b8" />
             <stop offset="100%" stopColor="#334155" />
           </linearGradient>
 
-          {/* Gold Needle Taper Tip */}
-          <linearGradient id="needleGoldTip" x1="0%" y1="0%" x2="0%" y2="100%">
+          {/* Gold Needle Tip */}
+          <linearGradient id="goldTipFinish" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#d4af37" />
             <stop offset="100%" stopColor="#fef08a" />
           </linearGradient>
 
-          {/* Needle Cloth Shadow */}
-          <filter id="needleShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="3" dy="5" stdDeviation="4" floodColor="#000000" floodOpacity="0.8" />
+          {/* Stitch Depth Shadow Filter */}
+          <filter id="stitchDepth" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="1" dy="1.5" stdDeviation="1" floodColor="#000000" floodOpacity="0.7" />
           </filter>
 
-          {/* Spark Glow Filter */}
-          <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          {/* Needle Shadow */}
+          <filter id="needleRealShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="4" dy="6" stdDeviation="4" floodColor="#000000" floodOpacity="0.85" />
           </filter>
+
+          {/* Puncture Hole Dimple Gradient */}
+          <radialGradient id="punctureHole" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#080103" stopOpacity="0.95" />
+            <stop offset="50%" stopColor="#2a050f" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#2a050f" stopOpacity="0" />
+          </radialGradient>
         </defs>
 
         {/* 1. Fabric Background */}
         <rect width="800" height="600" fill="url(#heroFabricGrad)" />
 
-        {/* Linen Fabric Weave Grid */}
-        <g opacity="0.12">
+        {/* Raw Cloth Linen Texture Grid */}
+        <g opacity="0.1">
           {Array.from({ length: 40 }).map((_, i) => (
             <line
               key={`h-${i}`}
@@ -89,8 +95,8 @@ export function AnimatedHeroHoop() {
           fill="none"
           stroke="#ca8a04"
           strokeWidth="12"
-          opacity="0.85"
-          filter="drop-shadow(0 0 25px rgba(0,0,0,0.8))"
+          opacity="0.9"
+          filter="drop-shadow(0 0 30px rgba(0,0,0,0.85))"
         />
         <circle
           cx="400"
@@ -100,7 +106,7 @@ export function AnimatedHeroHoop() {
           stroke="#713f12"
           strokeWidth="3"
         />
-        {/* Brass Tightener Screw at top of hoop */}
+        {/* Brass Tension Tightener Clamp at top */}
         <rect
           x="385"
           y="42"
@@ -112,80 +118,139 @@ export function AnimatedHeroHoop() {
           strokeWidth="1.5"
         />
 
-        {/* 3. ROTATING EMBROIDERY WHEEL (Rotates Clockwise Continuously) */}
-        <g className="wheel-rotate-cw" transform-origin="400 285">
+        {/* 3. ROTATING EMBROIDERY WHEEL (Continuous Clockwise Rotation) */}
+        {/* Fixed: transformOrigin applied in style and CSS without invalid DOM attribute */}
+        <g className="wheel-rotate-cw">
           <g transform="translate(400, 285)">
-            {/* Concentric Golden Machine Stitches */}
+            {/* Faint Tailor's Chalk Stencil Guide Lines (Unstitched fabric template) */}
             <circle
               cx="0"
               cy="0"
               r="190"
               fill="none"
-              stroke="url(#luxeGoldGrad)"
-              strokeWidth="2.5"
-              strokeDasharray="6,4"
+              stroke="#6b1426"
+              strokeWidth="1"
+              strokeDasharray="2,6"
+              opacity="0.6"
             />
             <circle
               cx="0"
               cy="0"
               r="160"
               fill="none"
-              stroke="url(#luxeGoldGrad)"
-              strokeWidth="2"
-              strokeDasharray="5,3"
+              stroke="#6b1426"
+              strokeWidth="1"
+              strokeDasharray="2,6"
+              opacity="0.6"
             />
             <circle
               cx="0"
               cy="0"
               r="130"
               fill="none"
-              stroke="url(#luxeGoldGrad)"
-              strokeWidth="1.8"
-              strokeDasharray="4,3"
-            />
-            <circle
-              cx="0"
-              cy="0"
-              r="100"
-              fill="none"
-              stroke="url(#luxeGoldGrad)"
-              strokeWidth="1.5"
-              strokeDasharray="3,3"
-              opacity="0.8"
+              stroke="#6b1426"
+              strokeWidth="1"
+              strokeDasharray="2,6"
+              opacity="0.6"
             />
 
-            {/* 12 Radiating Floral Stitched Spokes */}
+            {/* Faint Spoke Guides */}
             {Array.from({ length: 12 }).map((_, idx) => {
               const angle = (idx * 360) / 12;
               return (
-                <g key={idx} transform={`rotate(${angle})`}>
+                <line
+                  key={`spoke-guide-${idx}`}
+                  x1="45"
+                  y1="0"
+                  x2="190"
+                  y2="0"
+                  stroke="#6b1426"
+                  strokeWidth="1"
+                  strokeDasharray="2,8"
+                  opacity="0.5"
+                  transform={`rotate(${angle})`}
+                />
+              );
+            })}
+
+            {/* REAL EMBROIDERED STITCHES (Genuine 3D thread stitches with stitch depth) */}
+            {/* Outer Circle Running Stitches */}
+            <circle
+              cx="0"
+              cy="0"
+              r="190"
+              fill="none"
+              stroke="url(#goldThreadGrad)"
+              strokeWidth="2.8"
+              strokeDasharray="7,3.5"
+              strokeLinecap="round"
+              filter="url(#stitchDepth)"
+            />
+
+            {/* Middle Circle Heavy Satin Stitch Band */}
+            <circle
+              cx="0"
+              cy="0"
+              r="160"
+              fill="none"
+              stroke="url(#goldThreadGrad)"
+              strokeWidth="3.2"
+              strokeDasharray="5,2.5"
+              strokeLinecap="round"
+              filter="url(#stitchDepth)"
+            />
+
+            {/* Inner Circle Seed Stitches */}
+            <circle
+              cx="0"
+              cy="0"
+              r="130"
+              fill="none"
+              stroke="url(#goldThreadGrad)"
+              strokeWidth="2"
+              strokeDasharray="4,3"
+              strokeLinecap="round"
+              filter="url(#stitchDepth)"
+            />
+
+            {/* Authentic Embroidered Floral Spokes with Knots */}
+            {Array.from({ length: 12 }).map((_, idx) => {
+              const angle = (idx * 360) / 12;
+              return (
+                <g key={`stitched-spoke-${idx}`} transform={`rotate(${angle})`}>
+                  {/* Dense running stitch bar */}
                   <line
                     x1="45"
                     y1="0"
                     x2="190"
                     y2="0"
-                    stroke="url(#luxeGoldGrad)"
-                    strokeWidth="1.5"
-                    strokeDasharray="4,4"
+                    stroke="url(#goldThreadGrad)"
+                    strokeWidth="2"
+                    strokeDasharray="5,3"
+                    strokeLinecap="round"
+                    filter="url(#stitchDepth)"
                   />
-                  {/* Decorative Stitch Petal / Dot at outer intersections */}
-                  <circle cx="160" cy="0" r="2.5" fill="#fef08a" />
-                  <circle cx="190" cy="0" r="3" fill="#d4af37" />
+                  {/* Embroidered French Knot Beads at intersections */}
+                  <circle cx="130" cy="0" r="2.2" fill="#fff9d6" filter="url(#stitchDepth)" />
+                  <circle cx="160" cy="0" r="2.8" fill="#fde047" filter="url(#stitchDepth)" />
+                  <circle cx="190" cy="0" r="3.2" fill="#d4af37" filter="url(#stitchDepth)" />
                 </g>
               );
             })}
 
-            {/* Scallop Intersecting Arcs */}
+            {/* Scallop Intersecting Satin Arcs */}
             {Array.from({ length: 8 }).map((_, idx) => {
               const angle = (idx * 360) / 8;
               return (
                 <path
-                  key={`arc-${idx}`}
-                  d="M 130,0 Q 145,25 160,0"
+                  key={`scallop-${idx}`}
+                  d="M 130,0 Q 145,26 160,0"
                   fill="none"
-                  stroke="url(#luxeGoldGrad)"
-                  strokeWidth="1.5"
-                  strokeDasharray="3,2"
+                  stroke="url(#goldThreadGrad)"
+                  strokeWidth="2.2"
+                  strokeDasharray="4,2"
+                  strokeLinecap="round"
+                  filter="url(#stitchDepth)"
                   transform={`rotate(${angle})`}
                 />
               );
@@ -197,83 +262,110 @@ export function AnimatedHeroHoop() {
               cy="0"
               r="70"
               fill="#881337"
-              stroke="url(#luxeGoldGrad)"
-              strokeWidth="3.5"
+              stroke="url(#goldThreadGrad)"
+              strokeWidth="4"
+              filter="url(#stitchDepth)"
             />
             <circle
               cx="0"
               cy="0"
               r="52"
               fill="none"
-              stroke="url(#luxeGoldGrad)"
-              strokeWidth="2"
-              strokeDasharray="3,3"
+              stroke="url(#goldThreadGrad)"
+              strokeWidth="2.5"
+              strokeDasharray="3.5,3.5"
             />
-            <circle cx="0" cy="0" r="40" fill="url(#luxeGoldGrad)" />
+            <circle cx="0" cy="0" r="40" fill="url(#goldThreadGrad)" filter="url(#stitchDepth)" />
             <circle cx="0" cy="0" r="22" fill="#4c0519" />
-            <circle cx="0" cy="0" r="8" fill="#fef08a" />
+            <circle cx="0" cy="0" r="8" fill="#fff9d6" />
           </g>
         </g>
 
-        {/* 4. ACTIVE EMBROIDERY NEEDLE (Continuous Stitching Motion Piercing the Wheel) */}
-        <g className="needle-stitching-rig">
-          {/* Tension Spool Thread trailing from top hoop into needle eye */}
+        {/* 4. ACTIVE SEWING NEEDLE RIG: Rapid Machine Stitching Cycle Directly Into Fabric */}
+        <g className="needle-machine-assembly">
+          {/* Real Fabric Puncture Dimple where needle penetrates */}
+          <ellipse
+            cx="555"
+            cy="242"
+            rx="12"
+            ry="9"
+            fill="url(#punctureHole)"
+            className="puncture-dimple-pulse"
+          />
+
+          {/* Live Thread Flowing from Upper Spool Guide into Needle Eye */}
           <path
-            className="thread-tension-flow"
-            d="M 400,55 Q 430,110 500,165"
+            className="upper-spool-thread"
+            d="M 400,55 Q 450,110 500,165"
             fill="none"
-            stroke="url(#luxeGoldGrad)"
+            stroke="url(#goldThreadGrad)"
             strokeWidth="2.5"
-            strokeDasharray="6,2"
+            strokeDasharray="8,2"
             opacity="0.95"
           />
 
-          {/* Needle Group aligned at 45 degree angle, actively stitching ring r=160 */}
-          <g transform="translate(515, 175) rotate(52)" filter="url(#needleShadow)">
-            {/* Needle Body (Blade) */}
+          {/* Active Silk Thread connecting Needle Eye DIRECTLY INTO the Cloth Puncture */}
+          <path
+            className="penetrating-thread"
+            d="M 505,170 Q 532,205 555,242"
+            fill="none"
+            stroke="url(#goldThreadGrad)"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+
+          {/* Needle Shaft Assembly (Pierces in & out of the puncture hole) */}
+          <g className="needle-piercing-plunge" filter="url(#needleRealShadow)">
+            {/* Needle Shaft / Blade */}
             <line
-              x1="-80"
-              y1="0"
-              x2="65"
-              y2="0"
-              stroke="url(#needleSteel)"
+              x1="455"
+              y1="110"
+              x2="555"
+              y2="242"
+              stroke="url(#needleChromeFinish)"
               strokeWidth="3.5"
               strokeLinecap="round"
             />
-            {/* Chrome Specular Highlights */}
+
+            {/* Specular White Chrome Reflection */}
             <line
-              x1="-65"
-              y1="-0.75"
-              x2="50"
-              y2="-0.75"
+              x1="465"
+              y1="120"
+              x2="542"
+              y2="225"
               stroke="#ffffff"
               strokeWidth="1"
-              strokeOpacity="0.8"
+              strokeOpacity="0.85"
             />
-            {/* Sharp Piercing Gold Tip */}
-            <polygon
-              points="65,-2.5 82,0 65,2.5"
-              fill="url(#needleGoldTip)"
-            />
-            {/* Needle Eyelet (Thread hole) */}
+
+            {/* Needle Eyelet (Thread hole at upper shaft) */}
             <ellipse
-              cx="-65"
-              cy="0"
-              rx="4"
-              ry="1.8"
-              fill="#140106"
-              stroke="url(#needleGoldTip)"
+              cx="472"
+              cy="132"
+              rx="2"
+              ry="4"
+              fill="#170308"
+              stroke="url(#goldTipFinish)"
               strokeWidth="0.8"
+              transform="rotate(52 472 132)"
             />
-            {/* Golden Thread knot in Eyelet */}
-            <circle cx="-65" cy="0" r="1.5" fill="#fde047" />
+            {/* Gold Thread Passing through Needle Eye */}
+            <circle cx="472" cy="132" r="1.5" fill="#fff9d6" />
+
+            {/* Sharp Tapered Piercing Tip penetrating the cloth */}
+            <polygon
+              points="550,235 560,248 558,230"
+              fill="url(#goldTipFinish)"
+            />
           </g>
 
-          {/* Needle Piercing Spark Particle at puncture contact point */}
-          <g transform="translate(565, 238)" className="stitch-spark-pulse" filter="url(#goldGlow)">
-            <circle cx="0" cy="0" r="4.5" fill="#fff7cc" />
-            <line x1="-7" y1="0" x2="7" y2="0" stroke="#fde047" strokeWidth="1.5" />
-            <line x1="0" y1="-7" x2="0" y2="7" stroke="#fde047" strokeWidth="1.5" />
+          {/* Stitch Formation Spark Bursts on each needle strike */}
+          <g transform="translate(555, 242)" className="needle-stitch-burst">
+            <circle cx="0" cy="0" r="5" fill="#fff9d6" />
+            <line x1="-8" y1="0" x2="8" y2="0" stroke="#fde047" strokeWidth="2" />
+            <line x1="0" y1="-8" x2="0" y2="8" stroke="#fde047" strokeWidth="2" />
+            <line x1="-5" y1="-5" x2="5" y2="5" stroke="#fff9d6" strokeWidth="1.5" />
+            <line x1="-5" y1="5" x2="5" y2="-5" stroke="#fff9d6" strokeWidth="1.5" />
           </g>
         </g>
 
@@ -286,7 +378,7 @@ export function AnimatedHeroHoop() {
             height="38"
             rx="19"
             fill="#1e040b"
-            stroke="url(#luxeGoldGrad)"
+            stroke="url(#goldThreadGrad)"
             strokeWidth="1.8"
             filter="drop-shadow(0 4px 10px rgba(0,0,0,0.6))"
           />
@@ -305,7 +397,7 @@ export function AnimatedHeroHoop() {
         </g>
       </svg>
 
-      {/* Physics CSS Keyframes for Continuous Clockwise Wheel Rotation and Needle Stitching */}
+      {/* Real Embroidery Machine Keyframe Physics */}
       <style jsx>{`
         /* Smooth continuous clockwise wheel rotation */
         @keyframes rotate-wheel-clockwise {
@@ -317,69 +409,97 @@ export function AnimatedHeroHoop() {
           }
         }
 
-        /* Continuous mechanical needle piercing & stitching rhythm */
-        @keyframes needle-pierce-cycle {
+        /* High-speed mechanical sewing machine puncture cycle (~1.8Hz machine stroke) */
+        @keyframes needle-machine-stitch-stroke {
           0% {
-            transform: translate(0px, 0px) scale(1);
+            /* Retracted above cloth */
+            transform: translate(0px, 0px);
           }
-          35% {
-            /* Plunge down into cloth */
-            transform: translate(14px, 18px) scale(0.95);
+          40% {
+            /* Plunge down deep into fabric */
+            transform: translate(16px, 21px);
           }
-          50% {
-            /* Full cloth penetration */
-            transform: translate(18px, 24px) scale(0.92);
+          55% {
+            /* Bottom dead center (fabric penetration) */
+            transform: translate(20px, 26px);
           }
           75% {
-            /* Retract upwards */
-            transform: translate(6px, 6px) scale(0.98);
+            /* Ascending & pulling thread tight */
+            transform: translate(8px, 10px);
           }
           100% {
-            transform: translate(0px, 0px) scale(1);
+            /* Fully returned for next stitch */
+            transform: translate(0px, 0px);
           }
         }
 
-        /* Spark burst when needle pierces cloth */
-        @keyframes spark-flash {
-          0%, 25% {
-            opacity: 0;
-            transform: scale(0.2);
+        /* Fabric tension indentation pulse when needle penetrates */
+        @keyframes puncture-pulse {
+          0%, 30% {
+            opacity: 0.3;
+            transform: scale(0.7);
           }
           45%, 60% {
             opacity: 1;
-            transform: scale(1.3);
+            transform: scale(1.4);
           }
-          75%, 100% {
-            opacity: 0;
-            transform: scale(0.4);
+          80%, 100% {
+            opacity: 0.3;
+            transform: scale(0.7);
           }
         }
 
-        /* Dynamic thread tension */
-        @keyframes thread-vibrate {
+        /* Gold spark burst exactly when needle locks stitch into cloth */
+        @keyframes stitch-flash-spark {
+          0%, 35% {
+            opacity: 0;
+            transform: scale(0.2);
+          }
+          50%, 65% {
+            opacity: 1;
+            transform: scale(1.4);
+          }
+          80%, 100% {
+            opacity: 0;
+            transform: scale(0.3);
+          }
+        }
+
+        /* Thread vibrating with machine tension */
+        @keyframes thread-tension-motion {
           0%, 100% {
             stroke-dashoffset: 0;
           }
           50% {
-            stroke-dashoffset: 8;
+            stroke-dashoffset: 10;
           }
         }
 
         .wheel-rotate-cw {
-          animation: rotate-wheel-clockwise 22s linear infinite;
+          transform-origin: 400px 285px;
+          animation: rotate-wheel-clockwise 18s linear infinite;
         }
 
-        .needle-stitching-rig {
-          animation: needle-pierce-cycle 0.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-          transform-origin: 515px 175px;
+        .needle-piercing-plunge {
+          animation: needle-machine-stitch-stroke 0.55s cubic-bezier(0.35, 0.05, 0.45, 0.95) infinite;
         }
 
-        .stitch-spark-pulse {
-          animation: spark-flash 0.9s ease-in-out infinite;
+        .needle-stitch-burst {
+          animation: stitch-flash-spark 0.55s ease-in-out infinite;
+          transform-origin: 555px 242px;
         }
 
-        .thread-tension-flow {
-          animation: thread-vibrate 0.9s ease-in-out infinite;
+        .puncture-dimple-pulse {
+          animation: puncture-pulse 0.55s ease-in-out infinite;
+          transform-origin: 555px 242px;
+        }
+
+        .upper-spool-thread {
+          animation: thread-tension-motion 0.55s ease-in-out infinite;
+        }
+
+        .penetrating-thread {
+          animation: needle-machine-stitch-stroke 0.55s cubic-bezier(0.35, 0.05, 0.45, 0.95) infinite;
         }
       `}</style>
     </div>
