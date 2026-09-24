@@ -9,7 +9,7 @@ import {
 
 describe("Site Settings & Theme Customizer Engine", () => {
   beforeEach(async () => {
-    await resetSiteSettingsToDefault();
+    await resetSiteSettingsToDefault("test-suite");
   });
 
   describe("Validation Schemas", () => {

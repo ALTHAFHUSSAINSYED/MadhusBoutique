@@ -240,9 +240,9 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Agency Marketing & Branding Attribution Badge (High Visibility & Prominent) */}
-        <div className="mt-6 pt-5 border-t border-[#4a1220] flex items-center justify-center text-center">
-          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#150206] border-2 border-[#dfb15b]/70 shadow-xl hover:border-[#dfb15b] hover:shadow-2xl transition-all group">
+        {/* Agency Marketing & Branding Attribution Badge (Left-Aligned as Requested) */}
+        <div className="mt-6 pt-5 border-t border-[#4a1220] flex items-center justify-start text-left">
+          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#150206] border-2 border-[#dfb15b]/70 shadow-xl hover:border-[#dfb15b] hover:shadow-2xl transition-all group">
             <Sparkles className="w-4 h-4 text-[#dfb15b] shrink-0 animate-pulse" />
             <p className="text-xs sm:text-sm font-medium text-stone-200 tracking-wide">
               Designed &amp; Managed by{" "}

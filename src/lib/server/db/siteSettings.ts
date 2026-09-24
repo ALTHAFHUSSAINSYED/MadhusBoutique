@@ -180,7 +180,7 @@ export async function updateActiveSiteSettings(
  * Resets site settings to factory defaults
  */
 export async function resetSiteSettingsToDefault(
-  adminId: string,
+  adminId: string = "system",
   clientIp?: string,
   userAgent?: string
 ): Promise<SiteSettings> {
