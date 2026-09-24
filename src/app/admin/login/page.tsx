@@ -50,12 +50,6 @@ export default function AdminLoginPage() {
     }
   };
 
-  const fillQuickLogin = (roleEmail: string, pass: string) => {
-    setEmail(roleEmail);
-    setPassword(pass);
-    setErrorMessage(null);
-  };
-
   return (
     <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md space-y-8">
@@ -93,7 +87,7 @@ export default function AdminLoginPage() {
               <Input
                 type="email"
                 required
-                placeholder="staff@madhusboutique.com"
+                placeholder="admin@madhusboutique.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -122,39 +116,6 @@ export default function AdminLoginPage() {
               <ArrowRight className="w-4 h-4 text-[#dfb15b]" />
             </Button>
           </form>
-
-          {/* Role Quick-Fill Helper for Testing / Demo */}
-          <div className="pt-4 border-t border-stone-100 space-y-2.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block text-center">
-              Role Testing Credentials
-            </span>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => fillQuickLogin("superadmin@madhusboutique.com", "SuperAdmin@2026!")}
-                className="p-2 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-100/60 text-[10px] font-semibold text-amber-900 transition-colors text-center cursor-pointer"
-              >
-                Super Admin
-                <span className="block text-[8px] text-amber-700 font-normal">MFA Enabled</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => fillQuickLogin("orders@madhusboutique.com", "OrderManager@2026!")}
-                className="p-2 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-[10px] font-semibold text-stone-700 transition-colors text-center cursor-pointer"
-              >
-                Order Mgr
-                <span className="block text-[8px] text-stone-500 font-normal">Payments & Orders</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => fillQuickLogin("content@madhusboutique.com", "ContentManager@2026!")}
-                className="p-2 rounded-lg border border-stone-200 bg-stone-50 hover:bg-stone-100 text-[10px] font-semibold text-stone-700 transition-colors text-center cursor-pointer"
-              >
-                Content Mgr
-                <span className="block text-[8px] text-stone-500 font-normal">Catalog Only</span>
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="text-center">

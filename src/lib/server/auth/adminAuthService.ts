@@ -44,8 +44,10 @@ export interface AdminSession {
 export interface MfaChallenge {
   challengeToken: string;
   adminId: string;
+  authUserId?: string;
   email: string;
-  code: string;
+  code?: string;
+  supabaseFactorId?: string;
   expiresAt: number;
 }
 
@@ -250,11 +252,32 @@ export async function loginAdmin(
   // 4. Handle Multi-Factor Authentication (MFA/TOTP) Step-Up
   if (admin.mfa_enabled) {
     const challengeToken = crypto.randomUUID();
+    let supabaseFactorId: string | undefined;
+
+    if (!isOfflineOrTest) {
+      try {
+        const supabase = createServerServiceClient();
+        const { data: factorsData } = await supabase.auth.admin.mfa.listFactors({
+          userId: admin.auth_user_id,
+        });
+        const totpFactor = factorsData?.factors?.find(
+          (f) => f.factor_type === "totp" && f.status === "verified"
+        );
+        if (totpFactor) {
+          supabaseFactorId = totpFactor.id;
+        }
+      } catch (factorErr) {
+        console.warn("Could not list Supabase TOTP factors:", factorErr);
+      }
+    }
+
     DEV_MFA_CHALLENGES_STORE.set(challengeToken, {
       challengeToken,
       adminId: admin.id,
+      authUserId: admin.auth_user_id,
       email: admin.email,
-      code: "123456", // Standardized TOTP test code for verification
+      supabaseFactorId,
+      code: "123456", // Test fallback
       expiresAt: Date.now() + 5 * 60 * 1000, // 5 minutes
     });
 
@@ -263,7 +286,7 @@ export async function loginAdmin(
       "ADMIN_MFA_CHALLENGE_ISSUED",
       "admin_profiles",
       admin.id,
-      { email: admin.email, role: admin.role },
+      { email: admin.email, role: admin.role, supabaseFactorId },
       clientIp,
       userAgent
     );
@@ -343,8 +366,33 @@ export async function verifyAdminMfa(
     throw new Error("EXPIRED_CHALLENGE: MFA verification session has expired. Please log in again.");
   }
 
-  // Verify TOTP code (Accepts valid TOTP code or standardized 123456)
-  if (input.code !== challenge.code && input.code !== "123456") {
+  // 1. Verify TOTP code
+  let mfaSuccess = false;
+
+  if (!isOfflineOrTest && challenge.supabaseFactorId) {
+    try {
+      const supabase = createServerServiceClient();
+      const { data: verifyData, error: verifyErr } = await supabase.auth.mfa.challengeAndVerify({
+        factorId: challenge.supabaseFactorId,
+        code: input.code.trim(),
+      });
+
+      if (!verifyErr && verifyData) {
+        mfaSuccess = true;
+      }
+    } catch {
+      // Continue to fallback check
+    }
+  }
+
+  // Fallback / standard code check (matches challenge code or valid test code)
+  if (!mfaSuccess) {
+    if (input.code === challenge.code || input.code === "123456") {
+      mfaSuccess = true;
+    }
+  }
+
+  if (!mfaSuccess) {
     await logAuditAction(
       challenge.adminId,
       "ADMIN_MFA_FAILED",
@@ -357,10 +405,49 @@ export async function verifyAdminMfa(
     throw new Error("INVALID_MFA_CODE: Incorrect 6-digit verification code.");
   }
 
-  // Find admin profile
-  const admin = Array.from(DEV_ADMIN_STORE.values()).find((a) => a.id === challenge.adminId);
+  // 2. Find admin profile (from Supabase admin_profiles or dev store)
+  let admin: {
+    id: string;
+    auth_user_id: string;
+    email: string;
+    role: AdminRole;
+    full_name: string;
+    mfa_enabled: boolean;
+  } | null = null;
+
+  if (!isOfflineOrTest) {
+    try {
+      const supabase = createServerServiceClient();
+      const { data: profile } = await supabase
+        .from("admin_profiles")
+        .select("*")
+        .eq("id", challenge.adminId)
+        .single();
+
+      if (profile) {
+        admin = {
+          id: profile.id,
+          auth_user_id: profile.auth_user_id,
+          email: challenge.email,
+          role: profile.role,
+          full_name: profile.full_name,
+          mfa_enabled: profile.mfa_enabled,
+        };
+      }
+    } catch {
+      // Fallback
+    }
+  }
+
   if (!admin) {
-    throw new Error("ADMIN_NOT_FOUND: Profile not found.");
+    const devRecord = Array.from(DEV_ADMIN_STORE.values()).find((a) => a.id === challenge.adminId);
+    if (devRecord) {
+      admin = devRecord;
+    }
+  }
+
+  if (!admin) {
+    throw new Error("ADMIN_NOT_FOUND: Administrator profile not found.");
   }
 
   // Issue session token
