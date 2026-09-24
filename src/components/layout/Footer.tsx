@@ -240,14 +240,17 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Agency Marketing & Branding Attribution */}
-        <div className="mt-4 pt-4 border-t border-[#3b0a16] flex items-center justify-center text-center">
-          <p className="text-xs text-stone-400 font-medium tracking-wide">
-            Designed &amp; Managed by{" "}
-            <span className="text-[#dfb15b] font-semibold hover:text-[#fef3c7] transition-colors">
-              Althaf Web &amp; Cloud Solutions, Narasaraopet
-            </span>
-          </p>
+        {/* Agency Marketing & Branding Attribution Badge (High Visibility & Prominent) */}
+        <div className="mt-6 pt-5 border-t border-[#4a1220] flex items-center justify-center text-center">
+          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#150206] border-2 border-[#dfb15b]/70 shadow-xl hover:border-[#dfb15b] hover:shadow-2xl transition-all group">
+            <Sparkles className="w-4 h-4 text-[#dfb15b] shrink-0 animate-pulse" />
+            <p className="text-xs sm:text-sm font-medium text-stone-200 tracking-wide">
+              Designed &amp; Managed by{" "}
+              <span className="text-[#fef3c7] font-bold text-shadow-sm group-hover:text-[#dfb15b] transition-colors">
+                Althaf Web &amp; Cloud Solutions, Narasaraopet
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
