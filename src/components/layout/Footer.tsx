@@ -105,7 +105,7 @@ export function Footer() {
               <div className="flex items-center gap-2">
                 <WhatsAppIcon variant="3d" size={16} />
                 <a
-                  href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
+                  href={`https://web.whatsapp.com/send?phone=918142073385&text=${encodeURIComponent(
                     "Hello Madhus Boutique! 🌸 I would like to inquire about your embroidery designs and services."
                   )}`}
                   onClick={(e) => {
@@ -117,22 +117,22 @@ export function Footer() {
                       "Hello Madhus Boutique! 🌸 I would like to inquire about your embroidery designs and services."
                     );
                     const url = isMobile
-                      ? `https://wa.me/919390213935?text=${text}`
-                      : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+                      ? `https://wa.me/918142073385?text=${text}`
+                      : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
                     window.open(url, "_blank", "noopener,noreferrer");
                   }}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-emerald-400 text-emerald-300 font-medium transition-colors"
                 >
-                  WhatsApp: +91 93902 13935
+                  WhatsApp: +91 81420 73385
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#dfb15b]" />
-                <a href="tel:+919390213935" className="hover:text-white transition-colors">+91 93902 13935</a>
-                <span className="text-stone-600">|</span>
                 <a href="tel:+918142073385" className="hover:text-white transition-colors">+91 81420 73385</a>
+                <span className="text-stone-600">|</span>
+                <a href="tel:+919390213935" className="hover:text-white transition-colors">+91 93902 13935</a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#dfb15b]" />

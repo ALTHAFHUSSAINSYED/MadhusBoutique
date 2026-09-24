@@ -498,7 +498,7 @@ export default function OrderStatusPage({ params }: OrderPageProps) {
         {/* WhatsApp Assistance Button */}
         <div className="pt-2 text-center">
           <a
-            href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
+            href={`https://web.whatsapp.com/send?phone=918142073385&text=${encodeURIComponent(
               `Hello Madhus Boutique! 🌸 I am inquiring about Order #${order.order_number} 🪡📦`
             )}`}
             onClick={(e) => {
@@ -510,8 +510,8 @@ export default function OrderStatusPage({ params }: OrderPageProps) {
                 `Hello Madhus Boutique! 🌸 I am inquiring about Order #${order.order_number} 🪡📦`
               );
               const url = isMobile
-                ? `https://wa.me/919390213935?text=${text}`
-                : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+                ? `https://wa.me/918142073385?text=${text}`
+                : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
               window.open(url, "_blank", "noopener,noreferrer");
             }}
             target="_blank"

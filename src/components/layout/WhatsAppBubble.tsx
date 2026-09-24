@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 export function WhatsAppBubble() {
-  const phoneNumber = "919390213935";
+  const phoneNumber = "918142073385";
   const defaultMessage = encodeURIComponent(
     "Hello Madhus Boutique! 🌸✨ I am interested in your machine embroidery designs 🪡🧵 and custom embroidery services! 👗💫"
   );
@@ -99,7 +99,7 @@ export function WhatsAppBubble() {
           target="_blank"
           rel="noopener noreferrer"
           className={`relative w-15 h-15 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-115 active:scale-95 ${mounted ? "wa-entrance" : "wa-hidden"}`}
-          aria-label="Direct WhatsApp assistance: 9390213935"
+          aria-label="Direct WhatsApp assistance: 8142073385"
         >
           {/* Subtle glowing radar ripple behind icon */}
           <span className="absolute inset-0 rounded-2xl bg-[#25D366]/35 wa-sonar-ring pointer-events-none" />

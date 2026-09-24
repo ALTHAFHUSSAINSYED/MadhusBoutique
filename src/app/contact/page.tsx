@@ -42,9 +42,9 @@ export default function ContactPage() {
                 <Phone className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                 <div>
                   <strong className="block text-stone-900">Call / WhatsApp</strong>
+                  <a href="tel:+918142073385" className="text-[#6b1426] hover:underline font-semibold">+91 81420 73385</a>
+                  <span className="text-stone-400 mx-1.5">•</span>
                   <a href="tel:+919390213935" className="text-[#6b1426] hover:underline">+91 93902 13935</a>
-                  <span className="text-stone-400 mx-1">•</span>
-                  <a href="tel:+918142073385" className="text-[#6b1426] hover:underline">+91 81420 73385</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -59,7 +59,7 @@ export default function ContactPage() {
                 <div>
                   <strong className="block text-stone-900">WhatsApp Support</strong>
                   <a
-                    href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
+                    href={`https://web.whatsapp.com/send?phone=918142073385&text=${encodeURIComponent(
                       "Hello Madhus Boutique! 🌸✨ I have an inquiry about your embroidery designs and services."
                     )}`}
                     onClick={(e) => {
@@ -71,15 +71,15 @@ export default function ContactPage() {
                         "Hello Madhus Boutique! 🌸✨ I have an inquiry about your embroidery designs and services."
                       );
                       const url = isMobile
-                        ? `https://wa.me/919390213935?text=${text}`
-                        : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+                        ? `https://wa.me/918142073385?text=${text}`
+                        : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
                       window.open(url, "_blank", "noopener,noreferrer");
                     }}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#25D366] font-semibold hover:underline flex items-center gap-1.5"
                   >
-                    <span>Chat on WhatsApp (+91 93902 13935)</span>
+                    <span>Chat on WhatsApp (+91 81420 73385)</span>
                   </a>
                   <span className="block text-stone-500 mt-0.5">Mon–Sat, 9AM–8PM IST • Instant Response</span>
                 </div>

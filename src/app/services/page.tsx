@@ -35,8 +35,8 @@ export default function ServicesPage() {
       typeof navigator !== "undefined" &&
       /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const url = isMobile
-      ? `https://wa.me/919390213935?text=${text}`
-      : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+      ? `https://wa.me/918142073385?text=${text}`
+      : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
