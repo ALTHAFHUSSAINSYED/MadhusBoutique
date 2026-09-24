@@ -31,12 +31,24 @@ export function Header() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 sm:h-22">
           {/* Logo & Brand Identity */}
-          <Link href="/" className="flex items-center group shrink-0">
-            <div className="relative w-56 h-16 sm:w-64 sm:h-[72px] group-hover:scale-105 transition-transform duration-200">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 mr-2 sm:mr-4">
+            {/* Logo Icon (authentic size preserved) */}
+            <div className="relative w-13 h-13 sm:w-15 sm:h-15 lg:w-16 lg:h-16 shrink-0 group-hover:scale-105 transition-transform duration-200">
               <Image
-                src="/logo.png"
+                src="/logo-icon.png"
+                alt="Madhus Boutique Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            {/* Brand Name & Tagline — font enlarged till Home nav */}
+            <div className="relative h-12 sm:h-14 lg:h-16 w-56 sm:w-72 md:w-80 lg:w-[380px] group-hover:scale-[1.02] transition-transform duration-200">
+              <Image
+                src="/logo-text-wide.png"
                 alt="Madhus Boutique — Perfection in every stitch and fit"
                 fill
                 className="object-contain object-left"

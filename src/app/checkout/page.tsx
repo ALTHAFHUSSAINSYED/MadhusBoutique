@@ -36,9 +36,9 @@ export default function CheckoutPage() {
     merchant_name: string;
     qr_image_url: string;
   }>({
-    upi_id: "madhusboutique@upi",
+    upi_id: "Madhusboutiquenrt@ybl",
     merchant_name: "Madhus Boutique",
-    qr_image_url: "/images/upi-qr-sample.svg",
+    qr_image_url: "/payment-qr-clean.png",
   });
 
   // Fetch active payment settings and presigned QR from server
@@ -48,9 +48,9 @@ export default function CheckoutPage() {
       .then((data) => {
         if (data.success && data.data) {
           setPaymentSettings({
-            upi_id: data.data.upi_id,
-            merchant_name: data.data.merchant_name,
-            qr_image_url: data.data.qr_image_url || "/images/upi-qr-sample.svg",
+            upi_id: data.data.upi_id || "Madhusboutiquenrt@ybl",
+            merchant_name: data.data.merchant_name || "Madhus Boutique",
+            qr_image_url: data.data.qr_image_url || "/payment-qr-clean.png",
           });
         }
       })
@@ -342,16 +342,15 @@ export default function CheckoutPage() {
 
               {/* QR Code Presentation Box */}
               <div className="p-6 rounded-2xl bg-[#fbf8f2] border border-[#dfb15b]/40 text-center space-y-4">
-                <div className="max-w-[200px] aspect-square mx-auto rounded-2xl overflow-hidden bg-white p-3 border-2 border-[#d4af37] shadow-md">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={paymentSettings.qr_image_url}
-                      alt={`${merchantName} UPI QR`}
-                      fill
-                      unoptimized
-                      className="object-contain"
-                    />
-                  </div>
+                <div className="max-w-[240px] mx-auto rounded-2xl overflow-hidden bg-black p-2 border-2 border-[#d4af37] shadow-lg flex items-center justify-center">
+                  <img
+                    src={paymentSettings.qr_image_url || "/payment-qr-clean.png"}
+                    alt={`${merchantName} UPI QR`}
+                    onError={(e) => {
+                      e.currentTarget.src = "/payment-qr-clean.png";
+                    }}
+                    className="w-full h-auto max-h-[340px] object-contain rounded-xl"
+                  />
                 </div>
 
                 <div className="space-y-1">

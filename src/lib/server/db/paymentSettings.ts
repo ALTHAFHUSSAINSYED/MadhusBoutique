@@ -18,9 +18,9 @@ export const DEV_PAYMENT_SETTINGS_STORE = new Map<string, PaymentSettingRow>();
 // Seed default active payment settings
 DEV_PAYMENT_SETTINGS_STORE.set("active", {
   id: "11111111-1111-1111-1111-111111111111",
-  upi_id: "madhusboutique@upi",
-  merchant_name: "Madhus Boutique",
-  qr_image_s3_key: "payment/qr/upi-qr-default.png",
+  upi_id: process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || "Madhusboutiquenrt@ybl",
+  merchant_name: process.env.NEXT_PUBLIC_STORE_NAME || "Madhus Boutique",
+  qr_image_s3_key: null,
   is_active: true,
   updated_by: null,
   updated_at: new Date().toISOString(),
@@ -63,18 +63,18 @@ export async function getActivePaymentSettings(): Promise<ActivePaymentSettingsR
   if (!record) {
     record = DEV_PAYMENT_SETTINGS_STORE.get("active") || {
       id: "11111111-1111-1111-1111-111111111111",
-      upi_id: "madhusboutique@upi",
-      merchant_name: "Madhus Boutique",
-      qr_image_s3_key: "payment/qr/upi-qr-default.png",
+      upi_id: process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || "Madhusboutiquenrt@ybl",
+      merchant_name: process.env.NEXT_PUBLIC_STORE_NAME || "Madhus Boutique",
+      qr_image_s3_key: null,
       is_active: true,
       updated_by: null,
       updated_at: new Date().toISOString(),
     };
   }
 
-  // Generate short-lived presigned URL (15 min) for the private QR image
-  let qrUrl = "/images/upi-qr-sample.svg";
-  if (record.qr_image_s3_key) {
+  // Generate short-lived presigned URL (15 min) for the private QR image if stored in S3
+  let qrUrl = "/payment-qr-clean.png";
+  if (record.qr_image_s3_key && !record.qr_image_s3_key.includes("default")) {
     try {
       const presigned = await generateDownloadPresignedUrl({
         key: record.qr_image_s3_key,
@@ -82,8 +82,8 @@ export async function getActivePaymentSettings(): Promise<ActivePaymentSettingsR
       });
       qrUrl = presigned.downloadUrl;
     } catch {
-      // If presigning fails in mock environment, fallback to sample SVG
-      qrUrl = "/images/upi-qr-sample.svg";
+      // Fallback to authentic payment QR if presigning fails
+      qrUrl = "/payment-qr-clean.png";
     }
   }
 
