@@ -8,14 +8,31 @@ export function WhatsAppBubble() {
   const defaultMessage = encodeURIComponent(
     "Hello Madhus Boutique! 🌸✨ I am interested in your machine embroidery designs 🪡🧵 and custom embroidery services! 👗💫"
   );
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${defaultMessage}`;
+  
+  // Direct to web.whatsapp.com on desktop (bypasses Meta's preview bug which showed rhombuses), wa.me on mobile
+  const getWhatsAppUrl = () => {
+    const isMobile =
+      typeof navigator !== "undefined" &&
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return isMobile
+      ? `https://wa.me/${phoneNumber}?text=${defaultMessage}`
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${defaultMessage}`;
+  };
 
-  // One-time entrance animation on mount
+  const [whatsappUrl, setWhatsappUrl] = useState(`https://web.whatsapp.com/send?phone=${phoneNumber}&text=${defaultMessage}`);
+
+  // One-time entrance animation on mount and client-side device check
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
+    setWhatsappUrl(getWhatsAppUrl());
     const t = setTimeout(() => setMounted(true), 400);
     return () => clearTimeout(t);
   }, []);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.open(getWhatsAppUrl(), "_blank", "noopener,noreferrer");
+  };
 
   return (
     <>
@@ -78,6 +95,7 @@ export function WhatsAppBubble() {
 
         <a
           href={whatsappUrl}
+          onClick={handleClick}
           target="_blank"
           rel="noopener noreferrer"
           className={`relative w-15 h-15 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-115 active:scale-95 ${mounted ? "wa-entrance" : "wa-hidden"}`}

@@ -224,7 +224,22 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             </Button>
 
             <a
-              href={whatsappInquiryUrl}
+              href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
+                `Hello Madhus Boutique! 🌸✨ I would like to inquire about design ${product.product_code} (${product.name}) 🪡🧵👗`
+              )}`}
+              onClick={(e) => {
+                e.preventDefault();
+                const isMobile =
+                  typeof navigator !== "undefined" &&
+                  /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const text = encodeURIComponent(
+                  `Hello Madhus Boutique! 🌸✨ I would like to inquire about design ${product.product_code} (${product.name}) 🪡🧵👗`
+                );
+                const url = isMobile
+                  ? `https://wa.me/919390213935?text=${text}`
+                  : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+                window.open(url, "_blank", "noopener,noreferrer");
+              }}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full h-11 rounded-lg border border-[#e7dfd5] bg-white hover:bg-stone-50 text-stone-800 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"

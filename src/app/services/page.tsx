@@ -31,7 +31,13 @@ export default function ServicesPage() {
     const text = encodeURIComponent(
       `Hello Madhus Boutique! 🌸✨ I want to inquire about custom embroidery services 🪡🧵\nName: ${formData.name || "Customer"}\nService: ${formData.serviceType}\nFabric: ${formData.fabric}\nNotes: ${formData.notes || "None"}`
     );
-    window.open(`https://wa.me/919390213935?text=${text}`, "_blank");
+    const isMobile =
+      typeof navigator !== "undefined" &&
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const url = isMobile
+      ? `https://wa.me/919390213935?text=${text}`
+      : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (

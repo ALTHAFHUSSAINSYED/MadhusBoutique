@@ -498,9 +498,22 @@ export default function OrderStatusPage({ params }: OrderPageProps) {
         {/* WhatsApp Assistance Button */}
         <div className="pt-2 text-center">
           <a
-            href={`https://wa.me/919390213935?text=${encodeURIComponent(
+            href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
               `Hello Madhus Boutique! 🌸 I am inquiring about Order #${order.order_number} 🪡📦`
             )}`}
+            onClick={(e) => {
+              e.preventDefault();
+              const isMobile =
+                typeof navigator !== "undefined" &&
+                /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+              const text = encodeURIComponent(
+                `Hello Madhus Boutique! 🌸 I am inquiring about Order #${order.order_number} 🪡📦`
+              );
+              const url = isMobile
+                ? `https://wa.me/919390213935?text=${text}`
+                : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+              window.open(url, "_blank", "noopener,noreferrer");
+            }}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-stone-300 text-xs font-semibold text-stone-700 hover:bg-stone-50 hover:text-stone-900 transition-colors"
