@@ -20,27 +20,33 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CART_STORAGE_KEY = "madhus_boutique_cart_v1";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  // Lazy state initialization prevents SSR hydration mismatch & avoids setState in effect
-  const [items, setItems] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = localStorage.getItem(CART_STORAGE_KEY);
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
-
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [hasLoadedStorage, setHasLoadedStorage] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Synchronize cart changes to localStorage
+  // Load from localStorage only after client mounts to guarantee server & client match on initial hydration
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem(CART_STORAGE_KEY);
+      if (saved) {
+        setItems(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error("Failed to read cart from storage", e);
+    } finally {
+      setHasLoadedStorage(true);
+    }
+  }, []);
+
+  // Synchronize cart changes to localStorage only after initial client load
+  useEffect(() => {
+    if (!hasLoadedStorage) return;
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
     } catch (e) {
       console.error("Failed to persist cart to storage", e);
     }
-  }, [items]);
+  }, [items, hasLoadedStorage]);
 
   const addToCart = (product: Product) => {
     setItems((prev) => {

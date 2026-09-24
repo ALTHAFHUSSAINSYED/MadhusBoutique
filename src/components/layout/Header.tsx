@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -21,6 +21,11 @@ export function Header() {
   const pathname = usePathname();
   const { totalItems, setIsCartOpen } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#e7dfd5] glass-header transition-all">
@@ -101,7 +106,7 @@ export function Header() {
               aria-label="View Shopping Cart"
             >
               <ShoppingBag className="w-5 h-5 text-[#6b1426]" />
-              {totalItems > 0 && (
+              {mounted && totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#d4af37] text-[11px] font-bold text-[#2a1402] shadow-sm animate-scale">
                   {totalItems}
                 </span>
