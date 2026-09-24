@@ -23,7 +23,6 @@ export function Header() {
   const router = useRouter();
   const { totalItems, setIsCartOpen } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [headerSearchQuery, setHeaderSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
 
@@ -31,13 +30,8 @@ export function Header() {
     setMounted(true);
   }, []);
 
-  // Close search modal on route change
-  useEffect(() => {
-    setSearchModalOpen(false);
-  }, [pathname]);
-
-  const handleGlobalSearchSelect = (term: string) => {
-    setSearchModalOpen(false);
+  const handleMobileSearchSelect = (term: string) => {
+    setMobileMenuOpen(false);
     router.push(`/designs?search=${encodeURIComponent(term)}`);
   };
 
@@ -104,24 +98,21 @@ export function Header() {
               })}
             </nav>
 
-            {/* Right Action Icons (Search, Cart & Mobile Menu) */}
-            <div className="flex items-center space-x-2.5 sm:space-x-3">
-              {/* Search Trigger Button */}
-              <button
-                onClick={() => setSearchModalOpen(true)}
-                className="relative p-2.5 rounded-full bg-white border border-[#e7dfd5] text-stone-800 hover:border-[#d4af37] hover:bg-[#fbf9f5] transition-all cursor-pointer shadow-xs group"
-                aria-label="Search embroidery designs"
-                title="Search embroidery designs"
-              >
-                <Search className="w-5 h-5 text-[#6b1426] group-hover:scale-105 transition-transform" />
-              </button>
-
+            {/* Right Action Icons (Merged Search & Explore, Cart & Mobile Menu) */}
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              {/* Explore & Designs Link with Search Icon */}
               <Link
                 href="/designs"
-                className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-[#f6efe2] text-[#4a1220] hover:bg-[#ebdcc3] border border-[#dfb15b]/40 transition-colors"
+                className="relative inline-flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold pl-1.5 sm:pl-2 pr-2.5 sm:pr-3.5 py-1 sm:py-1.5 rounded-full bg-[#f6efe2] text-[#4a1220] hover:bg-[#ebdcc3] border border-[#dfb15b]/60 hover:border-[#b8860b] transition-all cursor-pointer shadow-xs group"
+                aria-label="Explore & Designs"
+                title="Explore & Designs"
               >
-                <Compass className="w-3.5 h-3.5 text-[#b8860b]" />
-                <span>Explore Designs</span>
+                <div className="w-6 h-6 rounded-full bg-white border border-[#dfb15b]/40 flex items-center justify-center text-[#6b1426] shadow-2xs group-hover:scale-105 transition-transform shrink-0">
+                  <Search className="w-3.5 h-3.5 text-[#6b1426]" />
+                </div>
+                <span className="font-semibold text-stone-800 group-hover:text-[#6b1426] transition-colors whitespace-nowrap">
+                  Explore &amp; Designs
+                </span>
               </Link>
 
               {/* Shopping Cart Button */}
@@ -163,8 +154,7 @@ export function Header() {
                 query={headerSearchQuery}
                 onQueryChange={setHeaderSearchQuery}
                 onSelectSuggestion={(sug) => {
-                  setMobileMenuOpen(false);
-                  handleGlobalSearchSelect(sug);
+                  handleMobileSearchSelect(sug);
                 }}
                 placeholder="Search embroidery..."
                 className="w-full"
@@ -205,44 +195,6 @@ export function Header() {
           </div>
         )}
       </header>
-
-      {/* Global Search Modal */}
-      {searchModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
-          onClick={() => setSearchModalOpen(false)}
-        >
-          <div
-            className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-[#e7dfd5] p-6 space-y-4 animate-in zoom-in-95 duration-150"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between pb-2 border-b border-stone-100">
-              <div className="flex items-center gap-2 text-stone-900 font-serif font-bold text-lg">
-                <Sparkles className="w-4 h-4 text-[#d4af37]" />
-                <span>Find Specific Embroidery Design</span>
-              </div>
-              <button
-                onClick={() => setSearchModalOpen(false)}
-                className="p-1.5 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors"
-                aria-label="Close search"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <SearchBar
-              query={headerSearchQuery}
-              onQueryChange={setHeaderSearchQuery}
-              onSelectSuggestion={(sug) => {
-                handleGlobalSearchSelect(sug);
-              }}
-              placeholder="Search by motif (Peacock, Aari), code (MB-001), subcategory or format..."
-              autoFocus
-              className="w-full"
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 }
