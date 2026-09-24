@@ -23,7 +23,6 @@ export function Header() {
   const router = useRouter();
   const { totalItems, setIsCartOpen } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerSearchQuery, setHeaderSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
 
@@ -31,15 +30,13 @@ export function Header() {
     setMounted(true);
   }, []);
 
-  // Close menus on route change
+  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-    setMobileSearchOpen(false);
   }, [pathname]);
 
   const handleMobileSearchSelect = (term: string) => {
     setMobileMenuOpen(false);
-    setMobileSearchOpen(false);
     router.push(`/designs?search=${encodeURIComponent(term)}`);
   };
 
@@ -106,26 +103,17 @@ export function Header() {
               })}
             </nav>
 
-            {/* Right Action Icons (Mobile Search, Desktop Explore & Designs, Cart & Hamburger Menu) */}
+            {/* Right Action Icons (Mobile Search Icon [Explore Designs], Desktop Explore & Designs, Cart & Hamburger Menu) */}
             <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
-              {/* Mobile Search Trigger Button (search icon function in mobile view) */}
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileSearchOpen(!mobileSearchOpen);
-                  if (mobileMenuOpen) setMobileMenuOpen(false);
-                }}
-                className={cn(
-                  "md:hidden p-2 rounded-full border transition-all cursor-pointer shadow-xs shrink-0 flex items-center justify-center",
-                  mobileSearchOpen
-                    ? "bg-[#6b1426] text-white border-[#6b1426]"
-                    : "bg-white border-[#e7dfd5] text-[#6b1426] hover:border-[#dfb15b]"
-                )}
-                aria-label="Search embroidery designs"
-                title="Search embroidery designs"
+              {/* Mobile Search Icon: Directly Navigates to /designs (Explore Designs functionality) */}
+              <Link
+                href="/designs"
+                className="md:hidden p-2 rounded-full border border-[#e7dfd5] bg-white text-[#6b1426] hover:border-[#dfb15b] transition-all cursor-pointer shadow-xs shrink-0 flex items-center justify-center"
+                aria-label="Explore Embroidery Designs"
+                title="Explore Embroidery Designs"
               >
                 <Search className="w-4.5 h-4.5" />
-              </button>
+              </Link>
 
               {/* Explore & Designs Link with Search Icon (Desktop View) */}
               <Link
@@ -159,10 +147,7 @@ export function Header() {
               {/* Mobile menu trigger with three horizontal lines */}
               <button
                 type="button"
-                onClick={() => {
-                  setMobileMenuOpen(!mobileMenuOpen);
-                  if (mobileSearchOpen) setMobileSearchOpen(false);
-                }}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={cn(
                   "md:hidden p-2 rounded-xl border transition-all cursor-pointer shrink-0 flex items-center justify-center",
                   mobileMenuOpen
@@ -182,37 +167,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Search Bar Dropdown (When search icon is tapped in mobile) */}
-        {mobileSearchOpen && (
-          <div className="md:hidden border-b border-[#e7dfd5] bg-[#fbf9f5] px-4 py-3 space-y-2.5 shadow-md animate-in slide-in-from-top-2">
-            <div className="flex items-center justify-between text-xs text-stone-600 font-medium">
-              <span className="flex items-center gap-1.5 text-[#6b1426] font-semibold">
-                <Search className="w-3.5 h-3.5" />
-                <span>Search Embroidery Designs</span>
-              </span>
-              <button
-                type="button"
-                onClick={() => setMobileSearchOpen(false)}
-                className="text-stone-400 hover:text-stone-700 p-1"
-                aria-label="Close search"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <SearchBar
-              query={headerSearchQuery}
-              onQueryChange={setHeaderSearchQuery}
-              onSelectSuggestion={(sug) => {
-                handleMobileSearchSelect(sug);
-              }}
-              placeholder="Search motif (Peacock, Aari), code, subcategory..."
-              autoFocus
-              className="w-full"
-            />
-          </div>
-        )}
-
-        {/* Mobile Menu Dropdown (All features from attached picture) */}
+        {/* Mobile Menu Dropdown (Three Horizontal Lines Menu with all features) */}
         {mobileMenuOpen && (
           <div className="md:hidden border-b border-[#e7dfd5] bg-[#fdfbf7] px-4 pt-3 pb-6 space-y-4 shadow-xl animate-in slide-in-from-top-2">
             {/* 1. Search Bar inside Mobile Menu */}
@@ -254,20 +209,6 @@ export function Header() {
                   </Link>
                 );
               })}
-            </div>
-
-            {/* 3. Explore & Designs Hero CTA (with Search Icon) */}
-            <div className="pt-2 border-t border-[#e7dfd5]">
-              <Link
-                href="/designs"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-gradient-to-r from-[#6b1426] to-[#4a1220] text-[#fef3c7] font-semibold text-sm shadow-md hover:opacity-95 transition-all"
-              >
-                <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[#fef3c7]">
-                  <Search className="w-3.5 h-3.5" />
-                </div>
-                <span>Explore &amp; Designs</span>
-              </Link>
             </div>
           </div>
         )}
