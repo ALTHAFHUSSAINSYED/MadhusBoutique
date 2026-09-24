@@ -29,9 +29,9 @@ export default function ServicesPage() {
 
   const directWhatsAppInquiry = () => {
     const text = encodeURIComponent(
-      `Hello Madhus Boutique! I want to inquire about custom embroidery services.\nName: ${formData.name || "Customer"}\nService: ${formData.serviceType}\nFabric: ${formData.fabric}\nNotes: ${formData.notes || "None"}`
+      `Hello Madhus Boutique! 🌸✨ I want to inquire about custom embroidery services 🪡🧵\nName: ${formData.name || "Customer"}\nService: ${formData.serviceType}\nFabric: ${formData.fabric}\nNotes: ${formData.notes || "None"}`
     );
-    window.open(`https://wa.me/919876543210?text=${text}`, "_blank");
+    window.open(`https://wa.me/919390213935?text=${text}`, "_blank");
   };
 
   return (

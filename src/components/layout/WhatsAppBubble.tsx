@@ -6,7 +6,7 @@ import Image from "next/image";
 export function WhatsAppBubble() {
   const phoneNumber = "919390213935";
   const defaultMessage = encodeURIComponent(
-    "Hello Madhus Boutique! I am interested in your machine embroidery designs and custom embroidery services."
+    "Hello Madhus Boutique! 🌸✨ I am interested in your machine embroidery designs 🪡🧵 and custom embroidery services! 👗💫"
   );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${defaultMessage}`;
 

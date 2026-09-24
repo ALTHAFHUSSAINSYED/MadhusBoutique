@@ -498,7 +498,9 @@ export default function OrderStatusPage({ params }: OrderPageProps) {
         {/* WhatsApp Assistance Button */}
         <div className="pt-2 text-center">
           <a
-            href={`https://wa.me/919876543210?text=${whatsappMessage}`}
+            href={`https://wa.me/919390213935?text=${encodeURIComponent(
+              `Hello Madhus Boutique! 🌸 I am inquiring about Order #${order.order_number} 🪡📦`
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-stone-300 text-xs font-semibold text-stone-700 hover:bg-stone-50 hover:text-stone-900 transition-colors"

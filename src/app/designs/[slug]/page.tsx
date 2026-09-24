@@ -40,8 +40,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     (p) => p.category === product.category && p.id !== product.id
   ).slice(0, 3);
 
-  const whatsappInquiryUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
-    `Hello Madhus Boutique, I would like to inquire about design ${product.product_code} (${product.name}).`
+  const whatsappInquiryUrl = `https://wa.me/919390213935?text=${encodeURIComponent(
+    `Hello Madhus Boutique! 🌸✨ I would like to inquire about design ${product.product_code} (${product.name}) 🪡🧵👗`
   )}`;
 
   return (
