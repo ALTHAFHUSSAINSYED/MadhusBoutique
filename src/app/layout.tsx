@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WhatsAppBubble } from "@/components/layout/WhatsAppBubble";
+import { StitchingIntroAnimation } from "@/components/layout/StitchingIntroAnimation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,6 +69,7 @@ export default function RootLayout({
           <Footer />
           <CartDrawer />
           <WhatsAppBubble />
+          <StitchingIntroAnimation />
         </CartProvider>
       </body>
     </html>

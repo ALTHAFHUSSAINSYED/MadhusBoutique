@@ -2,21 +2,24 @@
 
 import React, { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { MOCK_PRODUCTS } from "@/data/mockProducts";
+import { MOCK_PRODUCTS, POPULAR_SEARCH_SUGGESTIONS } from "@/data/mockProducts";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { CategoryFilter } from "@/components/storefront/CategoryFilter";
 import { SearchBar } from "@/components/storefront/SearchBar";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { SlidersHorizontal, ArrowUpDown } from "lucide-react";
+import { SlidersHorizontal, ArrowUpDown, Sparkles, Tag } from "lucide-react";
 import { EmbroideryFormat } from "@/types/store";
 
 function DesignsCatalogContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "All";
+  const initialSubcategory = searchParams.get("subcategory") || "All";
+  const initialSearch = searchParams.get("search") || "";
 
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>(initialSubcategory);
   const [selectedFormat, setSelectedFormat] = useState<string>("All");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
   const [sortBy, setSortBy] = useState<string>("featured");
 
   // Filter & Sort Logic
@@ -26,6 +29,13 @@ function DesignsCatalogContent() {
       if (selectedCategory !== "All" && product.category !== selectedCategory) {
         return false;
       }
+      // Subcategory match
+      if (
+        selectedSubcategory !== "All" &&
+        product.subcategory !== selectedSubcategory
+      ) {
+        return false;
+      }
       // Format match
       if (
         selectedFormat !== "All" &&
@@ -33,13 +43,21 @@ function DesignsCatalogContent() {
       ) {
         return false;
       }
-      // Search query match (name, code, description)
+      // Search query match (name, code, description, subcategory, tags)
       if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
+        const q = searchQuery.toLowerCase().trim();
         const matchesName = product.name.toLowerCase().includes(q);
         const matchesCode = product.product_code.toLowerCase().includes(q);
         const matchesDesc = product.description.toLowerCase().includes(q);
-        if (!matchesName && !matchesCode && !matchesDesc) {
+        const matchesSubcategory = product.subcategory?.toLowerCase().includes(q);
+        const matchesTags = product.tags?.some((t) => t.toLowerCase().includes(q));
+        if (
+          !matchesName &&
+          !matchesCode &&
+          !matchesDesc &&
+          !matchesSubcategory &&
+          !matchesTags
+        ) {
           return false;
         }
       }
@@ -50,13 +68,18 @@ function DesignsCatalogContent() {
       if (sortBy === "stitches") return b.stitch_count - a.stitch_count;
       return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
     });
-  }, [selectedCategory, selectedFormat, searchQuery, sortBy]);
+  }, [selectedCategory, selectedSubcategory, selectedFormat, searchQuery, sortBy]);
 
   const handleClearFilters = () => {
     setSelectedCategory("All");
+    setSelectedSubcategory("All");
     setSelectedFormat("All");
     setSearchQuery("");
     setSortBy("featured");
+  };
+
+  const handleSelectSuggestion = (suggestion: string) => {
+    setSearchQuery(suggestion);
   };
 
   return (
@@ -77,14 +100,16 @@ function DesignsCatalogContent() {
       {/* Search & Filter Controls Bar */}
       <div className="p-6 rounded-2xl bg-white border border-[#e7dfd5] shadow-xs space-y-6">
         {/* Top Row: Search and Sort */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
           <SearchBar
             query={searchQuery}
             onQueryChange={setSearchQuery}
-            placeholder="Search by motif name or code (e.g., MB-001, Peacock, Rose)..."
+            onSelectSuggestion={handleSelectSuggestion}
+            placeholder="Search by motif (Peacock, Rose), code (MB-001), or stitch..."
+            className="flex-1 max-w-2xl"
           />
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
             {/* Format Filter */}
             <div className="flex items-center gap-1.5 text-xs text-stone-600">
               <SlidersHorizontal className="w-3.5 h-3.5 text-[#b8860b]" />
@@ -120,11 +145,42 @@ function DesignsCatalogContent() {
           </div>
         </div>
 
-        {/* Bottom Row: Category Pill Tabs */}
-        <div>
+        {/* Quick Search Suggestions Bar */}
+        <div className="flex items-center gap-2 flex-wrap pt-1 text-xs">
+          <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#b8860b] shrink-0">
+            <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+            <span>Search Suggestions:</span>
+          </div>
+          {POPULAR_SEARCH_SUGGESTIONS.slice(0, 7).map((sug) => {
+            const isActive = searchQuery.toLowerCase() === sug.toLowerCase();
+            return (
+              <button
+                key={sug}
+                type="button"
+                onClick={() => handleSelectSuggestion(isActive ? "" : sug)}
+                className={`px-2.5 py-1 rounded-full text-xs transition-all cursor-pointer border flex items-center gap-1 ${
+                  isActive
+                    ? "bg-[#6b1426] text-white border-[#6b1426] font-semibold shadow-xs"
+                    : "bg-[#fdfbf7] hover:bg-stone-100 text-stone-700 border-stone-200"
+                }`}
+              >
+                <Tag className="w-2.5 h-2.5 opacity-60" />
+                <span>{sug}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Categories & Subcategories Filter */}
+        <div className="pt-2 border-t border-stone-100">
           <CategoryFilter
             selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
+            onSelectCategory={(cat) => {
+              setSelectedCategory(cat);
+              setSelectedSubcategory("All");
+            }}
+            selectedSubcategory={selectedSubcategory}
+            onSelectSubcategory={setSelectedSubcategory}
           />
         </div>
       </div>
@@ -133,13 +189,22 @@ function DesignsCatalogContent() {
       <div className="flex items-center justify-between text-xs text-stone-500 pt-2 border-b border-[#e7dfd5] pb-3">
         <span>
           Showing <strong className="text-stone-900 font-semibold">{filteredProducts.length}</strong> {filteredProducts.length === 1 ? "design" : "designs"}
+          {selectedCategory !== "All" && (
+            <span> in <strong className="text-[#6b1426]">{selectedCategory}</strong></span>
+          )}
+          {selectedSubcategory !== "All" && (
+            <span> • <strong className="text-[#b8860b]">{selectedSubcategory}</strong></span>
+          )}
+          {searchQuery && (
+            <span> matching &quot;<strong className="text-stone-900">{searchQuery}</strong>&quot;</span>
+          )}
         </span>
-        {(selectedCategory !== "All" || selectedFormat !== "All" || searchQuery) && (
+        {(selectedCategory !== "All" || selectedSubcategory !== "All" || selectedFormat !== "All" || searchQuery) && (
           <button
             onClick={handleClearFilters}
             className="text-[#6b1426] hover:underline font-semibold cursor-pointer"
           >
-            Reset Filters
+            Reset All Filters
           </button>
         )}
       </div>
@@ -165,7 +230,13 @@ function DesignsCatalogContent() {
 
 export default function DesignsCatalogPage() {
   return (
-    <Suspense fallback={<div className="max-w-7xl mx-auto p-12 text-center text-sm text-stone-500">Loading catalog...</div>}>
+    <Suspense
+      fallback={
+        <div className="max-w-7xl mx-auto px-4 py-20 text-center text-sm text-stone-500">
+          Loading atelier catalogue...
+        </div>
+      }
+    >
       <DesignsCatalogContent />
     </Suspense>
   );

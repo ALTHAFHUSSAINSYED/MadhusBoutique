@@ -16,6 +16,8 @@ export interface Product {
   slug: string;
   description: string;
   category: ProductCategory;
+  subcategory?: string;
+  tags?: string[];
   price: number;
   preview_url: string;
   preview_image_key: string;

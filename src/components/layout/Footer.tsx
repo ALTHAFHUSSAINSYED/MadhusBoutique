@@ -100,6 +100,20 @@ export function Footer() {
                   Customer Assistance
                 </Link>
               </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.dispatchEvent(new CustomEvent("mb:replay-intro"));
+                    }
+                  }}
+                  className="hover:text-[#fef3c7] transition-colors text-left flex items-center gap-1.5 cursor-pointer text-[#dfb15b] font-medium"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Replay Stitching Craft Intro</span>
+                </button>
+              </li>
             </ul>
             <div className="pt-2 space-y-2 text-xs text-stone-300">
               <div className="flex items-center gap-2">
