@@ -2,11 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 export function WhatsAppBubble() {
-  const phoneNumber = "918142073385";
+  const { settings } = useSiteConfig();
+  const rawPhone = settings.contact_info.whatsapp_number || "918142073385";
+  const phoneNumber = rawPhone.replace(/[^0-9]/g, "");
+  const brandName = settings.brand_assets.brand_name || "Madhus Boutique";
+
   const defaultMessage = encodeURIComponent(
-    "Hello Madhus Boutique! 🌸✨ I am interested in your machine embroidery designs 🪡🧵 and custom embroidery services! 👗💫"
+    `Hello ${brandName}! 🌸✨ I am interested in your machine embroidery designs 🪡🧵 and custom embroidery services! 👗💫`
   );
   
   // Direct to web.whatsapp.com on desktop (bypasses Meta's preview bug which showed rhombuses), wa.me on mobile
@@ -27,7 +32,7 @@ export function WhatsAppBubble() {
     setWhatsappUrl(getWhatsAppUrl());
     const t = setTimeout(() => setMounted(true), 400);
     return () => clearTimeout(t);
-  }, []);
+  }, [phoneNumber, defaultMessage]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -99,7 +104,7 @@ export function WhatsAppBubble() {
           target="_blank"
           rel="noopener noreferrer"
           className={`relative w-10.5 h-10.5 sm:w-12.5 sm:h-12.5 flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95 ${mounted ? "wa-entrance" : "wa-hidden"}`}
-          aria-label="Direct WhatsApp assistance: 8142073385"
+          aria-label={`Direct WhatsApp assistance: ${phoneNumber}`}
         >
           {/* Subtle glowing radar ripple behind icon */}
           <span className="absolute inset-0 rounded-2xl bg-[#25D366]/30 wa-sonar-ring pointer-events-none" />

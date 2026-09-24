@@ -1,18 +1,39 @@
 "use client";
 
 import React, { useState } from "react";
-import { Phone, Mail, CheckCircle2, HelpCircle } from "lucide-react";
+import { Phone, Mail, CheckCircle2, HelpCircle, MapPin, Clock } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 export default function ContactPage() {
+  const { settings } = useSiteConfig();
+  const brand = settings.brand_assets;
+  const contact = settings.contact_info;
+  const pageContact = settings.pages_content.contact;
+  const rawWa = (contact.whatsapp_number || "918142073385").replace(/[^0-9]/g, "");
+
   const [sent, setSent] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSent(true);
+  };
+
+  const handleWhatsAppChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const isMobile =
+      typeof navigator !== "undefined" &&
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const text = encodeURIComponent(
+      `Hello ${brand.brand_name || "Madhus Boutique"}! 🌸✨ I have an inquiry about your embroidery designs and services.`
+    );
+    const url = isMobile
+      ? `https://wa.me/${rawWa}?text=${text}`
+      : `https://web.whatsapp.com/send?phone=${rawWa}&text=${text}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -23,7 +44,7 @@ export default function ContactPage() {
           We Are Here To Assist
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4a1220]">
-          Contact Madhus Boutique
+          Contact {brand.brand_name || "Madhus Boutique"}
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
           Have a question regarding stitch formats, your recent order, or bespoke bridal services? Connect with our atelier team.
@@ -38,52 +59,82 @@ export default function ContactPage() {
               Atelier Support Desk
             </h3>
             <div className="space-y-4 text-xs">
-              <div className="flex items-start gap-3">
-                <Phone className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
-                <div>
-                  <strong className="block text-stone-900">Call / WhatsApp</strong>
-                  <a href="tel:+918142073385" className="text-[#6b1426] hover:underline font-semibold">+91 81420 73385</a>
-                  <span className="text-stone-400 mx-1.5">•</span>
-                  <a href="tel:+919390213935" className="text-[#6b1426] hover:underline">+91 93902 13935</a>
+              {(contact.primary_phone || contact.secondary_phone) && (
+                <div className="flex items-start gap-3">
+                  <Phone className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="block text-stone-900">Phone Assistance</strong>
+                    {contact.primary_phone && (
+                      <a href={`tel:${contact.primary_phone}`} className="text-[#6b1426] hover:underline font-semibold">
+                        {contact.primary_phone}
+                      </a>
+                    )}
+                    {contact.primary_phone && contact.secondary_phone && (
+                      <span className="text-stone-400 mx-1.5">•</span>
+                    )}
+                    {contact.secondary_phone && (
+                      <a href={`tel:${contact.secondary_phone}`} className="text-[#6b1426] hover:underline">
+                        {contact.secondary_phone}
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Mail className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
-                <div>
-                  <strong className="block text-stone-900">Email</strong>
-                  <a href="mailto:Madhusboutiquenrt@gmail.com" className="text-[#6b1426] hover:underline">Madhusboutiquenrt@gmail.com</a>
+              )}
+              {contact.support_email && (
+                <div className="flex items-start gap-3">
+                  <Mail className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="block text-stone-900">Email</strong>
+                    <a href={`mailto:${contact.support_email}`} className="text-[#6b1426] hover:underline">
+                      {contact.support_email}
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <WhatsAppIcon variant="3d" size={24} className="mt-0.5" />
-                <div>
-                  <strong className="block text-stone-900">WhatsApp Support</strong>
-                  <a
-                    href={`https://web.whatsapp.com/send?phone=918142073385&text=${encodeURIComponent(
-                      "Hello Madhus Boutique! 🌸✨ I have an inquiry about your embroidery designs and services."
-                    )}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const isMobile =
-                        typeof navigator !== "undefined" &&
-                        /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                      const text = encodeURIComponent(
-                        "Hello Madhus Boutique! 🌸✨ I have an inquiry about your embroidery designs and services."
-                      );
-                      const url = isMobile
-                        ? `https://wa.me/918142073385?text=${text}`
-                        : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
-                      window.open(url, "_blank", "noopener,noreferrer");
-                    }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#25D366] font-semibold hover:underline flex items-center gap-1.5"
-                  >
-                    <span>Chat on WhatsApp (+91 81420 73385)</span>
-                  </a>
-                  <span className="block text-stone-500 mt-0.5">Mon–Sat, 9AM–8PM IST • Instant Response</span>
+              )}
+              {contact.whatsapp_number && (
+                <div className="flex items-start gap-3">
+                  <WhatsAppIcon variant="3d" size={24} className="mt-0.5" />
+                  <div>
+                    <strong className="block text-stone-900">WhatsApp Support</strong>
+                    <a
+                      href={`https://wa.me/${rawWa}`}
+                      onClick={handleWhatsAppChat}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#25D366] font-semibold hover:underline flex items-center gap-1.5"
+                    >
+                      <span>Chat on WhatsApp (+{rawWa})</span>
+                    </a>
+                    <span className="block text-stone-500 mt-0.5">
+                      {pageContact.support_notice || "Mon–Sat, 9AM–8PM IST • Instant Response"}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
+              {contact.physical_address && (
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="block text-stone-900">Atelier Studio Address</strong>
+                    <span className="text-stone-700 block">{contact.physical_address}</span>
+                    {contact.city_state_pincode && (
+                      <span className="text-stone-500 block">{contact.city_state_pincode}</span>
+                    )}
+                    {pageContact.directions_hint && (
+                      <span className="text-stone-400 block text-[11px] mt-0.5">{pageContact.directions_hint}</span>
+                    )}
+                  </div>
+                </div>
+              )}
+              {pageContact.working_hours && (
+                <div className="flex items-start gap-3">
+                  <Clock className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="block text-stone-900">Visiting Hours</strong>
+                    <span className="text-stone-600">{pageContact.working_hours}</span>
+                  </div>
+                </div>
+              )}
               <div className="flex items-start gap-3">
                 <span className="text-[#b8860b] font-bold text-sm shrink-0 mt-0.5">₹</span>
                 <div>

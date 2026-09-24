@@ -1,22 +1,57 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { Sparkles, CheckCircle2 } from "lucide-react";
+import { Sparkles, CheckCircle2, Award, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 export default function AboutPage() {
+  const { settings } = useSiteConfig();
+  const about = settings.pages_content.about;
+  const brand = settings.brand_assets;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-widest text-[#b8860b]">
-          Heritage & Technology
+          Heritage &amp; Technology
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4a1220]">
-          The Madhus Boutique Atelier
+          The {brand.brand_name || "Madhus Boutique"} Atelier
         </h1>
         <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
           Where age-old Indian embroidery traditions converge with modern industrial machine precision.
         </p>
+      </div>
+
+      {/* Quick Stats Banner from CMS */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-2xl bg-[#f7f2e7] border border-[#e7dfd5] text-center">
+        <div>
+          <span className="block font-serif text-2xl sm:text-3xl font-bold text-[#6b1426]">
+            {about.experience_years || "15+ Years"}
+          </span>
+          <span className="text-xs text-stone-500 font-medium">Industry Heritage</span>
+        </div>
+        <div>
+          <span className="block font-serif text-2xl sm:text-3xl font-bold text-[#6b1426]">
+            {about.designs_count || "5,000+ Patterns"}
+          </span>
+          <span className="text-xs text-stone-500 font-medium">Calibrated Library</span>
+        </div>
+        <div>
+          <span className="block font-serif text-2xl sm:text-3xl font-bold text-[#6b1426]">
+            100%
+          </span>
+          <span className="text-xs text-stone-500 font-medium">Tension Tested</span>
+        </div>
+        <div>
+          <span className="block font-serif text-2xl sm:text-3xl font-bold text-[#6b1426]">
+            DST / PES / EXP
+          </span>
+          <span className="text-xs text-stone-500 font-medium">Multi-Format Compatible</span>
+        </div>
       </div>
 
       {/* Story Grid */}
@@ -27,13 +62,13 @@ export default function AboutPage() {
             <span>Our Founding Philosophy</span>
           </div>
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#4a1220] leading-snug">
-            Empowering Boutiques with Flawless Digital Stitch Files
+            {about.story_title || "Empowering Boutiques with Flawless Digital Stitch Files"}
           </h2>
-          <p className="text-sm text-stone-600 leading-relaxed">
-            Madhus Boutique originated from a simple yet crucial realization: boutique creators, tailors, and digitizers often waste hours troubleshooting poorly calibrated online embroidery files that cause constant thread breakage, needle snapping, and fabric puckering.
+          <p className="text-sm text-stone-600 leading-relaxed whitespace-pre-line">
+            {about.story_body || "Madhus Boutique originated from a simple yet crucial realization: boutique creators, tailors, and digitizers often waste hours troubleshooting poorly calibrated online embroidery files that cause constant thread breakage, needle snapping, and fabric puckering."}
           </p>
           <p className="text-sm text-stone-600 leading-relaxed">
-            Every pattern in our library is engineered from the ground up by seasoned digitizers and stitch-tested on commercial Tajima, Brother, and Janome machines before it is ever published to our catalog.
+            {about.craftsmanship_text || "Every pattern in our library is engineered from the ground up by seasoned digitizers and stitch-tested on commercial Tajima, Brother, and Janome machines before it is ever published to our catalog."}
           </p>
           <div className="pt-2">
             <Button asChild>
@@ -44,7 +79,7 @@ export default function AboutPage() {
 
         <div className="p-8 rounded-3xl bg-[#f7f2e7] border border-[#e7dfd5] space-y-6 luxury-shadow">
           <h3 className="font-serif text-xl font-bold text-[#4a1220]">
-            The Madhus Benchmark
+            The {brand.brand_name || "Madhus"} Benchmark
           </h3>
           <div className="space-y-4">
             {[

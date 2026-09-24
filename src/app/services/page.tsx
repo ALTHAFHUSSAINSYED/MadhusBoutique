@@ -10,8 +10,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 export default function ServicesPage() {
+  const { settings } = useSiteConfig();
+  const services = settings.pages_content.services;
+  const brand = settings.brand_assets;
+  const contact = settings.contact_info;
+  const rawWa = (contact.whatsapp_number || "918142073385").replace(/[^0-9]/g, "");
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -29,14 +36,14 @@ export default function ServicesPage() {
 
   const directWhatsAppInquiry = () => {
     const text = encodeURIComponent(
-      `Hello Madhus Boutique! 🌸✨ I want to inquire about custom embroidery services 🪡🧵\nName: ${formData.name || "Customer"}\nService: ${formData.serviceType}\nFabric: ${formData.fabric}\nNotes: ${formData.notes || "None"}`
+      `Hello ${brand.brand_name || "Madhus Boutique"}! 🌸✨ I want to inquire about custom embroidery services 🪡🧵\nName: ${formData.name || "Customer"}\nService: ${formData.serviceType}\nFabric: ${formData.fabric}\nNotes: ${formData.notes || "None"}`
     );
     const isMobile =
       typeof navigator !== "undefined" &&
       /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const url = isMobile
-      ? `https://wa.me/918142073385?text=${text}`
-      : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
+      ? `https://wa.me/${rawWa}?text=${text}`
+      : `https://web.whatsapp.com/send?phone=${rawWa}&text=${text}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
@@ -48,11 +55,19 @@ export default function ServicesPage() {
           Atelier Craftsmanship
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4a1220]">
-          Custom Embroidery Services
+          {services.title || "Custom Embroidery Services"}
         </h1>
         <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
-          From bridal blouse masterpieces to custom digital file conversion, our studio delivers bespoke artisan quality tailored to your exact measurements.
+          {services.subtitle || "From bridal blouse masterpieces to custom digital file conversion, our studio delivers bespoke artisan quality tailored to your exact measurements."}
         </p>
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-medium text-[#6b1426]">
+          <span className="px-3 py-1 rounded-full bg-[#f6efe2] border border-[#dfb15b]/40">
+            ⚡ Turnaround: {services.turnaround_time || "24 to 48 Hours Express Delivery"}
+          </span>
+          <span className="px-3 py-1 rounded-full bg-[#f6efe2] border border-[#dfb15b]/40">
+            🪡 Calibration: {services.machine_specs || "Calibrated for single & multi-head machines"}
+          </span>
+        </div>
       </div>
 
       {/* Services Grid */}

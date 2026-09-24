@@ -14,7 +14,8 @@ export type AdminPermission =
   | "verify:payments"
   | "manage:orders"
   | "view:customers"
-  | "manage:products";
+  | "manage:products"
+  | "manage:site_settings";
 
 export const ROLE_PERMISSIONS: Record<AdminRole, AdminPermission[]> = {
   SUPER_ADMIN: [
@@ -25,6 +26,7 @@ export const ROLE_PERMISSIONS: Record<AdminRole, AdminPermission[]> = {
     "manage:orders",
     "view:customers",
     "manage:products",
+    "manage:site_settings",
   ],
   ORDER_MANAGER: [
     "verify:payments",
@@ -33,6 +35,7 @@ export const ROLE_PERMISSIONS: Record<AdminRole, AdminPermission[]> = {
   ],
   CONTENT_MANAGER: [
     "manage:products",
+    "manage:site_settings",
   ],
 };
 

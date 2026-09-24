@@ -11,9 +11,11 @@ import {
   Package,
   FileText,
   QrCode,
+  Palette,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { SiteSettingsManager } from "@/components/admin/SiteSettingsManager";
 
 interface AdminProfile {
   id: string;
@@ -78,6 +80,7 @@ export default function AdminDashboardPage() {
   const canManageQr = profile.permissions.includes("manage:payment_qr");
   const canManageAdmins = profile.permissions.includes("manage:admins");
   const canViewAudit = profile.permissions.includes("view:audit_logs");
+  const canManageSiteSettings = profile.permissions.includes("manage:site_settings");
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
@@ -201,6 +204,20 @@ export default function AdminDashboardPage() {
             </span>
           </button>
         )}
+
+        {canManageSiteSettings && (
+          <button
+            onClick={() => setActiveTab("site-settings")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+              activeTab === "site-settings"
+                ? "bg-[#6b1426] text-white shadow-sm"
+                : "bg-white text-stone-600 hover:bg-stone-100 border border-stone-200"
+            }`}
+          >
+            <Palette className="w-4 h-4" />
+            Store Settings &amp; Theme CMS
+          </button>
+        )}
       </div>
 
       {/* Tab Panels */}
@@ -321,6 +338,10 @@ export default function AdminDashboardPage() {
               All events are logged with the executing admin user ID, IP address, user agent, and timestamp.
             </p>
           </div>
+        )}
+
+        {activeTab === "site-settings" && canManageSiteSettings && (
+          <SiteSettingsManager />
         )}
       </div>
     </div>

@@ -3,10 +3,30 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShieldCheck, Lock, Sparkles, Phone, Mail } from "lucide-react";
+import { ShieldCheck, Lock, Sparkles, Phone, Mail, MapPin } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 export function Footer() {
+  const { settings } = useSiteConfig();
+  const contact = settings.contact_info;
+  const brand = settings.brand_assets;
+  const waNumber = (contact.whatsapp_number || "918142073385").replace(/[^0-9]/g, "");
+
+  const handleWhatsAppClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const isMobile =
+      typeof navigator !== "undefined" &&
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const text = encodeURIComponent(
+      `Hello ${brand.brand_name || "Madhus Boutique"}! 🌸 I would like to inquire about your embroidery designs and services.`
+    );
+    const url = isMobile
+      ? `https://wa.me/${waNumber}?text=${text}`
+      : `https://web.whatsapp.com/send?phone=${waNumber}&text=${text}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <footer className="bg-[#24060f] text-[#f5eee6] border-t border-[#4a1220]">
       {/* Decorative Gold Stitch Divider */}
@@ -19,17 +39,24 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative w-36 h-10 shrink-0">
                 <Image
-                  src="/logo.png"
-                  alt="Madhus Boutique"
+                  src={brand.logo_wide_url || "/logo.png"}
+                  alt={brand.brand_name || "Madhus Boutique"}
                   fill
                   className="object-contain object-left"
+                  unoptimized={brand.logo_wide_url?.startsWith("data:") || brand.logo_wide_url?.startsWith("http")}
                 />
               </div>
             </div>
             <p className="text-xs text-stone-300 leading-relaxed">
               Premier Indian atelier crafting high-precision machine embroidery designs and exquisite custom bridal embroidery. Built for boutique owners, digitizers, and fashion enthusiasts.
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#dfb15b] font-medium pt-2">
+            {contact.physical_address && (
+              <div className="flex items-start gap-2 text-xs text-stone-400 pt-1">
+                <MapPin className="w-4 h-4 text-[#dfb15b] shrink-0 mt-0.5" />
+                <span>{contact.physical_address}{contact.city_state_pincode ? `, ${contact.city_state_pincode}` : ""}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-2 text-xs text-[#dfb15b] font-medium pt-1">
               <Sparkles className="w-4 h-4" />
               <span>Authentic Stitch Calibration</span>
             </div>
@@ -43,27 +70,27 @@ export function Footer() {
             <ul className="space-y-2 text-xs text-stone-300">
               <li>
                 <Link href="/designs?category=Bridal" className="hover:text-white transition-colors">
-                  Bridal Blouse & Yokes
+                  Bridal Blouse &amp; Yokes
                 </Link>
               </li>
               <li>
                 <Link href="/designs?category=Floral" className="hover:text-white transition-colors">
-                  English & Indian Floral Motifs
+                  English &amp; Indian Floral Motifs
                 </Link>
               </li>
               <li>
                 <Link href="/designs?category=Saree" className="hover:text-white transition-colors">
-                  Saree Borders & Pallu Kalka
+                  Saree Borders &amp; Pallu Kalka
                 </Link>
               </li>
               <li>
                 <Link href="/designs?category=Neck+Designs" className="hover:text-white transition-colors">
-                  Aari & Maggam Neck Work
+                  Aari &amp; Maggam Neck Work
                 </Link>
               </li>
               <li>
                 <Link href="/designs?category=Kids" className="hover:text-white transition-colors">
-                  Kids Romper & Soft Embroidery
+                  Kids Romper &amp; Soft Embroidery
                 </Link>
               </li>
               <li>
@@ -77,7 +104,7 @@ export function Footer() {
           {/* Column 3: Customer Care & Tracking */}
           <div className="space-y-3">
             <h4 className="text-sm font-semibold tracking-wider text-[#d4af37] uppercase font-sans">
-              Orders & Support
+              Orders &amp; Support
             </h4>
             <ul className="space-y-2 text-xs text-stone-300">
               <li>
@@ -122,49 +149,53 @@ export function Footer() {
               </li>
             </ul>
             <div className="pt-2 space-y-2 text-xs text-stone-300">
-              <div className="flex items-center gap-2">
-                <WhatsAppIcon variant="3d" size={16} />
-                <a
-                  href={`https://web.whatsapp.com/send?phone=918142073385&text=${encodeURIComponent(
-                    "Hello Madhus Boutique! 🌸 I would like to inquire about your embroidery designs and services."
-                  )}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const isMobile =
-                      typeof navigator !== "undefined" &&
-                      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    const text = encodeURIComponent(
-                      "Hello Madhus Boutique! 🌸 I would like to inquire about your embroidery designs and services."
-                    );
-                    const url = isMobile
-                      ? `https://wa.me/918142073385?text=${text}`
-                      : `https://web.whatsapp.com/send?phone=918142073385&text=${text}`;
-                    window.open(url, "_blank", "noopener,noreferrer");
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-emerald-400 text-emerald-300 font-medium transition-colors"
-                >
-                  WhatsApp: +91 81420 73385
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#dfb15b]" />
-                <a href="tel:+918142073385" className="hover:text-white transition-colors">+91 81420 73385</a>
-                <span className="text-stone-600">|</span>
-                <a href="tel:+919390213935" className="hover:text-white transition-colors">+91 93902 13935</a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[#dfb15b]" />
-                <a href="mailto:Madhusboutiquenrt@gmail.com" className="hover:text-white transition-colors">Madhusboutiquenrt@gmail.com</a>
-              </div>
+              {contact.whatsapp_number && (
+                <div className="flex items-center gap-2">
+                  <WhatsAppIcon variant="3d" size={16} />
+                  <a
+                    href={`https://wa.me/${waNumber}`}
+                    onClick={handleWhatsAppClick}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-emerald-400 text-emerald-300 font-medium transition-colors"
+                  >
+                    WhatsApp: +{waNumber.startsWith("91") ? waNumber.slice(0, 2) + " " + waNumber.slice(2) : waNumber}
+                  </a>
+                </div>
+              )}
+              {(contact.primary_phone || contact.secondary_phone) && (
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-[#dfb15b]" />
+                  {contact.primary_phone && (
+                    <a href={`tel:${contact.primary_phone}`} className="hover:text-white transition-colors">
+                      {contact.primary_phone}
+                    </a>
+                  )}
+                  {contact.primary_phone && contact.secondary_phone && (
+                    <span className="text-stone-600">|</span>
+                  )}
+                  {contact.secondary_phone && (
+                    <a href={`tel:${contact.secondary_phone}`} className="hover:text-white transition-colors">
+                      {contact.secondary_phone}
+                    </a>
+                  )}
+                </div>
+              )}
+              {contact.support_email && (
+                <div className="flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-[#dfb15b]" />
+                  <a href={`mailto:${contact.support_email}`} className="hover:text-white transition-colors">
+                    {contact.support_email}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Column 4: Machine Formats & Security Badge */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold tracking-wider text-[#d4af37] uppercase font-sans">
-              Digital Delivery & Security
+              Digital Delivery &amp; Security
             </h4>
             <p className="text-xs text-stone-300 leading-relaxed">
               Every digital purchase is delivered as a verified ZIP archive containing industry standard formats.
@@ -194,7 +225,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-[#4a1220] flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-4">
-          <p>© {new Date().getFullYear()} Madhus Boutique. All rights reserved. Crafted with precision.</p>
+          <p>© {new Date().getFullYear()} {brand.brand_name || "Madhus Boutique"}. All rights reserved. Crafted with precision.</p>
           <div className="flex items-center gap-4 text-stone-400 text-xs">
             <span>UPI QR Verified Delivery</span>
             <span>•</span>

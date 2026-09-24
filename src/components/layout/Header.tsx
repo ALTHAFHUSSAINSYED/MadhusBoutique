@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ShoppingBag, Menu, X, Compass, Sparkles, Search } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 import { cn } from "@/lib/utils";
 import { SearchBar } from "@/components/storefront/SearchBar";
 
@@ -22,6 +23,7 @@ export function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const { totalItems, setIsCartOpen } = useCart();
+  const { settings } = useSiteConfig();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerSearchQuery, setHeaderSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
@@ -40,14 +42,25 @@ export function Header() {
     router.push(`/designs?search=${encodeURIComponent(term)}`);
   };
 
+  const brand = settings.brand_assets;
+  const theme = settings.theme_colors;
+
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-[#e7dfd5] glass-header transition-all">
         {/* Top micro-announcement banner */}
-        <div className="bg-[#4a1220] text-[#fef3c7] text-[11px] tracking-wider py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-[#dfb15b] animate-pulse" />
-          <span>PREMIUM MACHINE EMBROIDERY DESIGNS • DST, PES, JEF & EXP FORMATS AVAILABLE</span>
-        </div>
+        {theme.announcement_visible !== false && (
+          <div
+            style={{
+              backgroundColor: theme.announcement_bg || "#4a1220",
+              color: theme.announcement_text_color || "#fef3c7",
+            }}
+            className="text-[11px] tracking-wider py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2 transition-colors duration-300"
+          >
+            <Sparkles className="w-3.5 h-3.5 animate-pulse" style={{ color: theme.accent_gold || "#dfb15b" }} />
+            <span>{theme.announcement_text || "PREMIUM MACHINE EMBROIDERY DESIGNS • DST, PES, JEF & EXP FORMATS AVAILABLE"}</span>
+          </div>
+        )}
 
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-18 sm:h-22">
@@ -56,22 +69,24 @@ export function Header() {
               {/* Logo Icon */}
               <div className="relative w-10 h-10 sm:w-13 sm:h-13 lg:w-16 lg:h-16 shrink-0 group-hover:scale-105 transition-transform duration-200">
                 <Image
-                  src="/logo-icon.png"
-                  alt="Madhus Boutique Logo"
+                  src={brand.logo_icon_url || "/logo-icon.png"}
+                  alt={`${brand.brand_name || "Madhus Boutique"} Logo`}
                   fill
                   className="object-contain"
                   priority
+                  unoptimized={brand.logo_icon_url?.startsWith("data:") || brand.logo_icon_url?.startsWith("http")}
                 />
               </div>
 
               {/* Brand Name & Tagline */}
               <div className="relative h-9 sm:h-12 lg:h-16 w-36 sm:w-56 md:w-80 lg:w-[380px] group-hover:scale-[1.02] transition-transform duration-200">
                 <Image
-                  src="/logo-text-wide.png"
-                  alt="Madhus Boutique — Perfection in every stitch and fit"
+                  src={brand.logo_wide_url || "/logo-text-wide.png"}
+                  alt={`${brand.brand_name || "Madhus Boutique"} — ${brand.tagline || "Perfection in every stitch and fit"}`}
                   fill
                   className="object-contain object-left"
                   priority
+                  unoptimized={brand.logo_wide_url?.startsWith("data:") || brand.logo_wide_url?.startsWith("http")}
                 />
               </div>
             </Link>

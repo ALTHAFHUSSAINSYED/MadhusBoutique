@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,9 +16,12 @@ import { MOCK_PRODUCTS } from "@/data/mockProducts";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { Button } from "@/components/ui/button";
 import { AnimatedHeroHoop } from "@/components/home/AnimatedHeroHoop";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 export default function HomePage() {
+  const { settings } = useSiteConfig();
   const featuredProducts = MOCK_PRODUCTS.filter((p) => p.featured).slice(0, 4);
+  const homeContent = settings.pages_content.home;
 
   return (
     <div className="space-y-20 pb-20">
@@ -30,18 +35,15 @@ export default function HomePage() {
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f6efe2] border border-[#dfb15b]/50 text-xs font-semibold text-[#6b1426]">
                 <Sparkles className="w-3.5 h-3.5 text-[#b8860b]" />
-                <span>Premier Digital Embroidery Atelier • 2026 Collection</span>
+                <span>{homeContent.badge_text || "Premier Digital Embroidery Atelier • 2026 Collection"}</span>
               </div>
 
               <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#4a1220] tracking-tight leading-[1.12]">
-                Beautiful Embroidery. <br />
-                <span className="text-[#6b1426] bg-gradient-to-r from-[#6b1426] to-[#881337] bg-clip-text text-transparent">
-                  Crafted With Precision.
-                </span>
+                {homeContent.hero_title || "Beautiful Embroidery. Crafted With Precision."}
               </h1>
 
               <p className="text-base sm:text-lg text-stone-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Download studio-calibrated machine embroidery designs for bridal wear, silk sarees, and designer blouses. Verified formats in DST, PES, JEF, and EXP.
+                {homeContent.hero_subtitle || "Download studio-calibrated machine embroidery designs for bridal wear, silk sarees, and designer blouses. Verified formats in DST, PES, JEF, and EXP."}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">

@@ -50,6 +50,8 @@ export const metadata: Metadata = {
 };
 
 
+import { SiteConfigProvider } from "@/context/SiteConfigContext";
+
 export default function RootLayout({
   children,
 }: {
@@ -61,16 +63,18 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#6b1426] selection:text-[#fef3c7]">
-        <CartProvider>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <CartDrawer />
-          <WhatsAppBubble />
-          <StitchingIntroAnimation />
-        </CartProvider>
+        <SiteConfigProvider>
+          <CartProvider>
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <CartDrawer />
+            <WhatsAppBubble />
+            <StitchingIntroAnimation />
+          </CartProvider>
+        </SiteConfigProvider>
       </body>
     </html>
   );

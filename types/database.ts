@@ -2,6 +2,8 @@
 // MADHUS BOUTIQUE: SUPABASE POSTGRESQL DATABASE TYPE DEFINITIONS
 // ==============================================================================
 
+import type { ContactInfo, BrandAssets, ThemeColors, PagesContent } from "./siteSettings";
+
 export type Json =
   | string
   | number
@@ -158,6 +160,16 @@ export type DownloadLogRow = {
   ip_address: string | null;
   user_agent: string | null;
   downloaded_at: string;
+};
+
+export type SiteSettingRow = {
+  id: string;
+  contact_info: ContactInfo;
+  brand_assets: BrandAssets;
+  theme_colors: ThemeColors;
+  pages_content: PagesContent;
+  updated_by: string | null;
+  updated_at: string;
 };
 
 // Database schema definition for Supabase client
@@ -422,6 +434,28 @@ export type Database = {
           ip_address?: string | null;
           user_agent?: string | null;
           downloaded_at?: string;
+        };
+        Relationships: [];
+      };
+      site_settings: {
+        Row: SiteSettingRow;
+        Insert: {
+          id?: string;
+          contact_info: ContactInfo;
+          brand_assets: BrandAssets;
+          theme_colors: ThemeColors;
+          pages_content: PagesContent;
+          updated_by?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          contact_info?: ContactInfo;
+          brand_assets?: BrandAssets;
+          theme_colors?: ThemeColors;
+          pages_content?: PagesContent;
+          updated_by?: string | null;
+          updated_at?: string;
         };
         Relationships: [];
       };
