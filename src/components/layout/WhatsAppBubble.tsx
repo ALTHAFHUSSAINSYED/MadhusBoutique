@@ -85,11 +85,11 @@ export function WhatsAppBubble() {
 
       <aside
         aria-label="Support chat"
-        className="fixed bottom-6 right-6 z-40 flex items-center group pointer-events-auto"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center group pointer-events-auto"
       >
         {/* Tooltip on hover */}
-        <div className="mr-3 px-3.5 py-1.5 bg-stone-900/95 backdrop-blur text-white text-xs font-medium rounded-full shadow-xl border border-stone-700/50 hidden sm:group-hover:flex items-center gap-1.5 transition-all animate-in fade-in slide-in-from-right-2">
-          <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+        <div className="mr-2 sm:mr-3 px-3 py-1 bg-stone-900/95 backdrop-blur text-white text-[11px] font-medium rounded-full shadow-lg border border-stone-700/50 hidden sm:group-hover:flex items-center gap-1.5 transition-all animate-in fade-in slide-in-from-right-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
           <span>Chat on WhatsApp</span>
         </div>
 
@@ -98,11 +98,11 @@ export function WhatsAppBubble() {
           onClick={handleClick}
           target="_blank"
           rel="noopener noreferrer"
-          className={`relative w-15 h-15 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-115 active:scale-95 ${mounted ? "wa-entrance" : "wa-hidden"}`}
+          className={`relative w-10.5 h-10.5 sm:w-12.5 sm:h-12.5 flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95 ${mounted ? "wa-entrance" : "wa-hidden"}`}
           aria-label="Direct WhatsApp assistance: 8142073385"
         >
           {/* Subtle glowing radar ripple behind icon */}
-          <span className="absolute inset-0 rounded-2xl bg-[#25D366]/35 wa-sonar-ring pointer-events-none" />
+          <span className="absolute inset-0 rounded-2xl bg-[#25D366]/30 wa-sonar-ring pointer-events-none" />
 
           {/* Pure 3D WhatsApp Icon — zero background boxes, transparent PNG */}
           <div className="relative w-full h-full wa-animated-icon">
