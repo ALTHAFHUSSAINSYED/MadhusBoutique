@@ -97,7 +97,12 @@ export function SiteConfigProvider({ children }: { children: React.ReactNode }) 
     // Also update base design tokens
     if (theme.primary_color) root.style.setProperty("--primary", theme.primary_color);
     if (theme.accent_gold) root.style.setProperty("--accent", theme.accent_gold);
-    if (theme.background_tint) root.style.setProperty("--background", theme.background_tint);
+    if (theme.background_tint) {
+      root.style.setProperty("--background", theme.background_tint);
+      if (document.body) {
+        document.body.style.backgroundColor = theme.background_tint;
+      }
+    }
   }, []);
 
   const refreshSettings = useCallback(async () => {

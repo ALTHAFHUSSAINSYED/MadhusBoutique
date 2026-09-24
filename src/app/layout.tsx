@@ -62,7 +62,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#6b1426] selection:text-[#fef3c7]">
+      <body className="min-h-full flex flex-col bg-[var(--brand-bg,#fdfbf7)] text-[#1c1917] selection:bg-[#6b1426] selection:text-[#fef3c7] transition-colors duration-300">
         <SiteConfigProvider>
           <CartProvider>
             <Header />
