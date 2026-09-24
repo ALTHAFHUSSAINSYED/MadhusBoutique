@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ShieldCheck, Lock, Sparkles, Phone, Mail } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 export function Footer() {
   return (
@@ -98,7 +101,33 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-            <div className="pt-2 space-y-1.5 text-xs text-stone-300">
+            <div className="pt-2 space-y-2 text-xs text-stone-300">
+              <div className="flex items-center gap-2">
+                <WhatsAppIcon variant="3d" size={16} />
+                <a
+                  href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
+                    "Hello Madhus Boutique! 🌸 I would like to inquire about your embroidery designs and services."
+                  )}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const isMobile =
+                      typeof navigator !== "undefined" &&
+                      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    const text = encodeURIComponent(
+                      "Hello Madhus Boutique! 🌸 I would like to inquire about your embroidery designs and services."
+                    );
+                    const url = isMobile
+                      ? `https://wa.me/919390213935?text=${text}`
+                      : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+                    window.open(url, "_blank", "noopener,noreferrer");
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 text-emerald-300 font-medium transition-colors"
+                >
+                  WhatsApp: +91 93902 13935
+                </a>
+              </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#dfb15b]" />
                 <a href="tel:+919390213935" className="hover:text-white transition-colors">+91 93902 13935</a>

@@ -8,11 +8,11 @@ import {
   ShieldCheck,
   Download,
   Lock,
-  MessageCircle,
   FileArchive,
   ArrowLeft,
   Sparkles,
 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -518,7 +518,7 @@ export default function OrderStatusPage({ params }: OrderPageProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-stone-300 text-xs font-semibold text-stone-700 hover:bg-stone-50 hover:text-stone-900 transition-colors"
           >
-            <MessageCircle className="w-4 h-4 text-[#25D366]" />
+            <WhatsAppIcon variant="3d" size={18} />
             Need instant verification update? Inquire on WhatsApp
           </a>
         </div>

@@ -9,8 +9,8 @@ import {
   Check,
   Plus,
   Layers,
-  MessageCircle,
 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { MOCK_PRODUCTS } from "@/data/mockProducts";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { useCart } from "@/context/CartContext";
@@ -244,8 +244,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               rel="noopener noreferrer"
               className="w-full h-11 rounded-lg border border-[#e7dfd5] bg-white hover:bg-stone-50 text-stone-800 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              Inquire about this design on WhatsApp
+              <WhatsAppIcon variant="3d" size={20} />
+              <span>Inquire about this design on WhatsApp</span>
             </a>
           </div>
         </div>

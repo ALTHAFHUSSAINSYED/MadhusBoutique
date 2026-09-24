@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Phone, Mail, MessageCircle, CheckCircle2, HelpCircle } from "lucide-react";
+import { Phone, Mail, CheckCircle2, HelpCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -54,18 +55,33 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0 mt-0.5" />
+                <WhatsAppIcon variant="3d" size={24} className="mt-0.5" />
                 <div>
-                  <strong className="block text-stone-900">WhatsApp</strong>
+                  <strong className="block text-stone-900">WhatsApp Support</strong>
                   <a
-                    href="https://wa.me/919390213935?text=Hello%20Madhus%20Boutique!"
+                    href={`https://web.whatsapp.com/send?phone=919390213935&text=${encodeURIComponent(
+                      "Hello Madhus Boutique! 🌸✨ I have an inquiry about your embroidery designs and services."
+                    )}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const isMobile =
+                        typeof navigator !== "undefined" &&
+                        /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                      const text = encodeURIComponent(
+                        "Hello Madhus Boutique! 🌸✨ I have an inquiry about your embroidery designs and services."
+                      );
+                      const url = isMobile
+                        ? `https://wa.me/919390213935?text=${text}`
+                        : `https://web.whatsapp.com/send?phone=919390213935&text=${text}`;
+                      window.open(url, "_blank", "noopener,noreferrer");
+                    }}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#25D366] hover:underline"
+                    className="text-[#25D366] font-semibold hover:underline flex items-center gap-1.5"
                   >
-                    Chat on WhatsApp (+91 93902 13935)
+                    <span>Chat on WhatsApp (+91 93902 13935)</span>
                   </a>
-                  <span className="block text-stone-500 mt-0.5">Mon–Sat, 9AM–8PM IST</span>
+                  <span className="block text-stone-500 mt-0.5">Mon–Sat, 9AM–8PM IST • Instant Response</span>
                 </div>
               </div>
               <div className="flex items-start gap-3">

@@ -6,10 +6,10 @@ import {
   Cpu,
   Scissors,
   CheckCircle2,
-  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 export default function ServicesPage() {
   const [formData, setFormData] = useState({
@@ -160,8 +160,8 @@ export default function ServicesPage() {
                 Our atelier team will review your specifications and contact you via WhatsApp / Phone within 24 hours.
               </p>
               <div className="pt-2">
-                <Button onClick={directWhatsAppInquiry} variant="gold" className="text-stone-900 text-xs font-bold">
-                  <MessageCircle className="w-4 h-4 mr-2" />
+                <Button onClick={directWhatsAppInquiry} variant="gold" className="text-stone-900 text-xs font-bold flex items-center gap-2">
+                  <WhatsAppIcon variant="3d" size={18} />
                   Speed Up via WhatsApp
                 </Button>
               </div>
@@ -235,10 +235,10 @@ export default function ServicesPage() {
                 <button
                   type="button"
                   onClick={directWhatsAppInquiry}
-                  className="w-full sm:w-auto h-11 px-5 rounded-lg bg-[#25D366] text-white text-xs font-semibold flex items-center justify-center gap-2 hover:bg-[#20ba59] transition-colors cursor-pointer"
+                  className="w-full sm:w-auto h-11 px-5 rounded-lg bg-[#25D366] text-white text-xs font-semibold flex items-center justify-center gap-2 hover:bg-[#20ba59] transition-all cursor-pointer shadow-md hover:shadow-lg active:scale-98"
                 >
-                  <MessageCircle className="w-4 h-4 fill-white" />
-                  Chat Directly on WhatsApp
+                  <WhatsAppIcon variant="3d" size={22} className="drop-shadow-sm" />
+                  <span>Chat Directly on WhatsApp</span>
                 </button>
               </div>
             </form>
