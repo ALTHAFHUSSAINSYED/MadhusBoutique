@@ -224,9 +224,17 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-[#4a1220] flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-4">
-          <p>© {new Date().getFullYear()} {brand.brand_name || "Madhus Boutique"}. All rights reserved. Crafted with precision.</p>
-          <div className="flex items-center gap-4 text-stone-400 text-xs">
+        <div className="mt-12 pt-6 border-t border-[#4a1220] flex flex-col sm:flex-row items-center sm:items-start justify-between text-xs text-stone-400 gap-4">
+          <div className="space-y-1 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} {brand.brand_name || "Madhus Boutique"}. All rights reserved. Crafted with precision.</p>
+            <p className="text-stone-400">
+              Designed &amp; Managed by{" "}
+              <span className="text-stone-300 hover:text-[#dfb15b] transition-colors">
+                Althaf Web &amp; Cloud Solutions, Narasaraopet
+              </span>
+            </p>
+          </div>
+          <div className="flex items-center gap-4 text-stone-400 text-xs shrink-0">
             <span>UPI QR Verified Delivery</span>
             <span>•</span>
             <Link href="/track-order" className="hover:text-white transition-colors">
@@ -237,19 +245,6 @@ export function Footer() {
               <Lock className="w-3 h-3 text-[#dfb15b]" />
               <span>Admin Portal</span>
             </Link>
-          </div>
-        </div>
-
-        {/* Agency Marketing & Branding Attribution Badge (Left-Aligned as Requested) */}
-        <div className="mt-6 pt-5 border-t border-[#4a1220] flex items-center justify-start text-left">
-          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#150206] border-2 border-[#dfb15b]/70 shadow-xl hover:border-[#dfb15b] hover:shadow-2xl transition-all group">
-            <Sparkles className="w-4 h-4 text-[#dfb15b] shrink-0 animate-pulse" />
-            <p className="text-xs sm:text-sm font-medium text-stone-200 tracking-wide">
-              Designed &amp; Managed by{" "}
-              <span className="text-[#fef3c7] font-bold text-shadow-sm group-hover:text-[#dfb15b] transition-colors">
-                Althaf Web &amp; Cloud Solutions, Narasaraopet
-              </span>
-            </p>
           </div>
         </div>
       </div>
